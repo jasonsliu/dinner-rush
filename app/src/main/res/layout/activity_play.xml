@@ -10,4 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.jason.dinner_rush.PlayActivity">
 
+
+    <TextView android:id="@+id/displayIngredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button android:id="@+id/processIngredient"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:hint="Cook"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/displayIngredients"
+        android:onClick="processIngredient"/>
+
+
+
 </RelativeLayout>
