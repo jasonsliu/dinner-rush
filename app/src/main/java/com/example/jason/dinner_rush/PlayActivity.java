@@ -6,43 +6,39 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
-
-class Ingredient {
-    Ingredient(String name, int quantity) {
-        name_ = name; quantity_ = quantity;
-    }
-
-
-    String name_;
-    int quantity_;
-}
+//
+//class Ingredient {
+//    Ingredient(String name, int quantity) {
+//        name_ = name; quantity_ = quantity;
+//    }
+//
+//
+//    String name_;
+//    int quantity_;
+//}
 
 
 public class PlayActivity extends AppCompatActivity {
 
-    Ingredient potato;
-    Ingredient fries;
-
+    Inventory inventory_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        potato = new Ingredient("potato", 100);
-        fries = new Ingredient("fries", 0);
-        updateCount();
+        inventory_ = new Inventory();
+        // updateCount();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
     }
 
     protected void updateCount() {
         TextView display = (TextView) findViewById(R.id.displayIngredients);
-        String displayText = "Potatoes: " + Integer.toString(potato.quantity_)
-                + "; Fries: " + Integer.toString(fries.quantity_);
+        String displayText = "Potatoes: " + Integer.toString(inventory_.getIngredientCount("potato"))
+                + "; Fries: " + Integer.toString(inventory_.getIngredientCount("fries"));
         display.setText(displayText);
     }
 
     protected void processIngredient(View view) {
-        potato.quantity_ -= 1;
-        fries.quantity_ += 1;
+        inventory_.processIngredient("potato");
         updateCount();
     }
 
