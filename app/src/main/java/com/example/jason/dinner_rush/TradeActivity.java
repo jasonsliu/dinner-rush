@@ -21,7 +21,9 @@ public class TradeActivity extends AppCompatActivity {
     }
 
     void receiveMessage() {
-        // TODO: Listener for messages, calls receiveIngredient() when it gets one.
+        // TODO: Listener for sent ingredients and acks
+        // If it's an ingredient, calls receiveIngredient() when it gets one.
+        // If it's an ACK, decrease that ingredient's amount by 1 in AckSentIngredient();
     }
 
     void sendIngredient(String name) {
@@ -39,6 +41,19 @@ public class TradeActivity extends AppCompatActivity {
         }
     }
 
+    void AckSentIngredient(String ing_name) {
+        // Reduces OWN inventory by one, since you got confirmation that the ingredient sent.
+        Ingredient cur_ig = ingredients.get(ing_name);
+        if (cur_ig != null) {
+            if (cur_ig.quantity < 1) {
+                // This is an error. It should never be less than 0.
+                // TODO: report this error somehow.
+            } else {
+                cur_ig.quantity -= 1;
+            }
+        }
+    }
+
     // Call this when a message has been received,
     // Increases that ingredient's count by 1
     void receiveIngredient(String receivedMessage) {
@@ -49,6 +64,8 @@ public class TradeActivity extends AppCompatActivity {
         if (cur_ig != null) {
             cur_ig.quantity += 1;
         }
+
+        // After it is received, send a quick ACK saying it was received.
     }
 
     // THESE FUNCTIONS ARE CALLED BY THE BUTTONS IN DISPLAY XML
