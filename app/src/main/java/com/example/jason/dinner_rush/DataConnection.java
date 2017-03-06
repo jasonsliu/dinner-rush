@@ -32,10 +32,12 @@ public class DataConnection {
 
     private Socket mSocket;
     private int mPort = -1;
+    private ConnectionListener mConnectionListener;
 
-    public DataConnection(Handler handler) {
+    public DataConnection(Handler handler, ConnectionListener listener) {
         mUpdateHandler = handler;
         mChatServer = new ChatServer(handler);
+        mConnectionListener = listener;
     }
 
     public void tearDown() {
@@ -43,6 +45,10 @@ public class DataConnection {
         if (mChatClient != null) {
             mChatClient.tearDown();
         }
+    }
+
+    public interface ConnectionListener {
+        void stopAutoDiscovery();
     }
 
     public void connectToServer(InetAddress address, int port) {
@@ -133,7 +139,7 @@ public class DataConnection {
                     while (!Thread.currentThread().isInterrupted()) {
                         Log.d(TAG, "ServerSocket Created, awaiting connection");
                         setSocket(mServerSocket.accept());
-                        Log.d(TAG, "Connected.");
+                        Log.d(TAG, "Connected to client!");
                         if (mChatClient == null) {
                             int port = mSocket.getPort();
                             InetAddress address = mSocket.getInetAddress();
@@ -183,7 +189,8 @@ public class DataConnection {
                         setSocket(new Socket(mAddress, PORT));
                         Log.d(CLIENT_TAG, "Client-side socket initialized.");
                     } else {
-                        Log.d(CLIENT_TAG, "Socket already initialized. skipping!");
+                        Log.d(CLIENT_TAG, "Client-side socket already initialized. skipping!");
+                        mConnectionListener.stopAutoDiscovery();
                     }
 
                     mRecThread = new Thread(new ReceivingThread());
