@@ -31,14 +31,14 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     protected void updateCount() {
-        TextView display = (TextView) findViewById(R.id.displayIngredients);
-        String displayText = "Potatoes: " + Integer.toString(inventory_.getIngredientCount("potato"))
-                + "; Fries: " + Integer.toString(inventory_.getIngredientCount("fries"));
-        display.setText(displayText);
+//        TextView display = (TextView) findViewById(R.id.displayIngredients);
+//        String displayText = "Potatoes: " + Integer.toString(inventory_.getIngredientCount("potato"))
+//                + "; Fries: " + Integer.toString(inventory_.getIngredientCount("fries"));
+//        display.setText(displayText);
     }
 
     protected void processIngredient(View view) {
-        inventory_.processIngredient("potato");
+//        inventory_.processIngredient("potato");
         updateCount();
     }
 

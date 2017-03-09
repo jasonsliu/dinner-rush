@@ -7,5 +7,5 @@
     <string name="score_label">Score:</string>
     <string name="timer_label">Time:</string>
     <string name="max_number">99</string>
-    <string name="trade">Trade</string>
+    <string name="inventory">Inventory</string>
 </resources>

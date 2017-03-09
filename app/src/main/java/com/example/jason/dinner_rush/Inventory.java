@@ -1,5 +1,7 @@
 package com.example.jason.dinner_rush;
 
+import com.example.jason.dinner_rush.Ingredients.Ingredient;
+
 import java.util.Hashtable;
 
 /**
@@ -9,10 +11,10 @@ import java.util.Hashtable;
 public class Inventory {
 
     public Inventory() {
-        Ingredient potato = new Ingredient("potato", false, true);
-        ingredients_.put(potato.getName(), potato);
-        Ingredient carrot = new Ingredient("carrot", false, true);
-        ingredients_.put(carrot.getName(), carrot);
+//        Ingredient potato = new Ingredient("potato", false, true);
+//        ingredients_.put(potato.getName(), potato);
+//        Ingredient carrot = new Ingredient("carrot", false, true);
+//        ingredients_.put(carrot.getName(), carrot);
     }
 
     public boolean haveIngredient(String name) {

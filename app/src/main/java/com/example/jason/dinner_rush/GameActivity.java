@@ -3,9 +3,13 @@ package com.example.jason.dinner_rush;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.jason.dinner_rush.Ingredients.Carrot;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -42,6 +46,20 @@ public class GameActivity extends AppCompatActivity {
                 gameOver();
             }
         };
+
+        mContentView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    Carrot c = new Carrot(GameActivity.this, 50, 50);
+                    Log.d("test", String.valueOf(event.getX()));
+                    Log.d("test", String.valueOf(event.getY()));
+                    c.setLocation(500, 500);
+                    mContentView.addView(c);
+                }
+                return false;
+            }
+        });
 
         startGame();
     }

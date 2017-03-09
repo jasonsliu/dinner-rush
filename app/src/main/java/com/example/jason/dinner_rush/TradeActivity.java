@@ -3,6 +3,8 @@ package com.example.jason.dinner_rush;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.jason.dinner_rush.Ingredients.Ingredient;
+
 import java.util.Hashtable;
 
 public class TradeActivity extends AppCompatActivity {
@@ -64,7 +66,7 @@ public class TradeActivity extends AppCompatActivity {
         // Current ingredient
         Ingredient cur_ig = ingredients.get(receivedMessage);
         if (cur_ig != null) {
-            cur_ig.setQuantity(cur_ig.getQuantity() + 1);
+//            cur_ig.setQuantity(cur_ig.getQuantity() + 1);
         }
 
         // After it is received, send a quick ACK saying it was received.

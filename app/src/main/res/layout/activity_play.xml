@@ -23,7 +23,7 @@
         <ImageView
             android:layout_width="100dip"
             android:layout_height="100dip"
-            android:src="@drawable/carrot3"/>
+            android:src="@drawable/carrot_chopped"/>
         
     </LinearLayout>
     
