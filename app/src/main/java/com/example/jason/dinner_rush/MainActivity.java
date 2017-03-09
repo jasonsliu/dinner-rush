@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tradeButtonPress(View view) {
-        Intent intent = new Intent(this, TradeActivity.class);
+        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 }
