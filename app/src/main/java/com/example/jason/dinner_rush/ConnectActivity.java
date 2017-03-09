@@ -22,6 +22,8 @@ public class ConnectActivity extends AppCompatActivity {
     DataConnection mConnection;
     Handler autoConnectHandler = new Handler();
 
+    DataConnection.ConnectionListener mConnectionListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,14 @@ public class ConnectActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 String chatLine = msg.getData().getString("msg");
                 addChatLine(chatLine);
+            }
+        };
+
+        mConnectionListener = new DataConnection.ConnectionListener() {
+            @Override
+            public void stopAutoDiscovery() {
+                Log.d(TAG, "Stopping auto-discovery.");
+                autoConnectHandler.removeCallbacksAndMessages(null);
             }
         };
     }
@@ -79,7 +89,7 @@ public class ConnectActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         Log.d(TAG, "Starting.");
-        mConnection = new DataConnection(mUpdateHandler);
+        mConnection = new DataConnection(mUpdateHandler, mConnectionListener);
 
         mNsdHelper = new NsdHelper(this);
         mNsdHelper.initializeNsd();
@@ -142,9 +152,9 @@ public class ConnectActivity extends AppCompatActivity {
                     Log.d(TAG, "Connecting.");
                     mConnection.connectToServer(service.getHost(),
                             service.getPort());
-                    return;
                 }
             }
         }, 1);
     }
+
 }

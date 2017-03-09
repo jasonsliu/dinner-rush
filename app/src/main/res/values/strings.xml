@@ -4,4 +4,8 @@
     <string name="title_activity_connect">ConnectActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="level_label">Level:</string>
+    <string name="timer_label">Time:</string>
+    <string name="max_number">99</string>
+    <string name="trade">Trade</string>
 </resources>
