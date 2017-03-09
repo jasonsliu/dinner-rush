@@ -32,12 +32,12 @@ public class DataConnection {
 
     private Socket mSocket;
     private int mPort = -1;
-    private ConnectionListener mConnectionListener;
+    private ConnectionListener mListener;
 
     public DataConnection(Handler handler, ConnectionListener listener) {
         mUpdateHandler = handler;
         mChatServer = new ChatServer(handler);
-        mConnectionListener = listener;
+        mListener = listener;
     }
 
     public void tearDown() {
@@ -190,7 +190,7 @@ public class DataConnection {
                         Log.d(CLIENT_TAG, "Client-side socket initialized.");
                     } else {
                         Log.d(CLIENT_TAG, "Client-side socket already initialized. skipping!");
-                        mConnectionListener.stopAutoDiscovery();
+                        mListener.stopAutoDiscovery();
                     }
 
                     mRecThread = new Thread(new ReceivingThread());
