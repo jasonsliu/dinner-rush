@@ -51,7 +51,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Carrot c = new Carrot(GameActivity.this, 50, 50);
+                    Carrot c = new Carrot(GameActivity.this);
                     Log.d("test", String.valueOf(event.getX()));
                     Log.d("test", String.valueOf(event.getY()));
                     c.setLocation(500, 500);
