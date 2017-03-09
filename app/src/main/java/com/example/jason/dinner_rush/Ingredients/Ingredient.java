@@ -1,8 +1,8 @@
 package com.example.jason.dinner_rush.Ingredients;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.example.jason.dinner_rush.utils.PixelHelper;
 
@@ -10,7 +10,7 @@ import com.example.jason.dinner_rush.utils.PixelHelper;
  * Created by byronc on 3/8/17.
  */
 
-public class Ingredient extends ImageView {
+public class Ingredient extends AppCompatImageView {
 
     protected Context mContext;
     private String mName;
