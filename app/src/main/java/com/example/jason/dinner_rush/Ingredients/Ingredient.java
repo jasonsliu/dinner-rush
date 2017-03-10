@@ -2,6 +2,7 @@ package com.example.jason.dinner_rush.Ingredients;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 import com.example.jason.dinner_rush.utils.PixelHelper;
@@ -20,6 +21,7 @@ public class Ingredient extends AppCompatImageView {
     int mHealth;
     int mRawDrawable;
     int mProcessedDrawable;
+    IngredientListener mListener;
 
     public Ingredient(Context context) {
         super(context);
@@ -27,7 +29,7 @@ public class Ingredient extends AppCompatImageView {
 
     public Ingredient(Context context, String name,
                       int health, boolean mine, int rawHeight, int rawWidth,
-                      int raw, int processed) {
+                      int rawImage, int processedImage, IngredientListener listener) {
         super(context);
 
         // convert from px to dp
@@ -41,8 +43,9 @@ public class Ingredient extends AppCompatImageView {
         mHealth = health;
         m_isMine = mine;
         m_haveIt = m_isMine;
-        mRawDrawable = raw;
-        mProcessedDrawable = processed;
+        mRawDrawable = rawImage;
+        mProcessedDrawable = processedImage;
+        mListener = listener;
     }
 
     public void setLocation(float x, float y) {
@@ -50,10 +53,13 @@ public class Ingredient extends AppCompatImageView {
         this.setY(y);
     }
 
-    public void process() {
+    private void process() {
         mHealth--;
         if (mHealth <= 0) {
             setProcessed(true);
+        }
+        if (mHealth <= -1) {
+            // mListener.isFinished(this);
         }
     }
 
@@ -82,4 +88,17 @@ public class Ingredient extends AppCompatImageView {
     public boolean getIngredient() { return m_haveIt; }
     public boolean haveIngredient() { return m_haveIt; }
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            process();
+        }
+        return super.onTouchEvent(event);
+    }
+
+    public interface IngredientListener {
+        // call this when the user touches again after first processed
+        void isFinished(Ingredient ingredient);
+    }
 }

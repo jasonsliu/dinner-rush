@@ -18,10 +18,10 @@ public class Carrot extends Ingredient {
     public static final int PROCESSED_DRAWABLE = R.drawable.carrot_chopped;
 
 
-    public Carrot(Context context) {
+    public Carrot(Context context, IngredientListener listener) {
         super(context, NAME,
                 HEALTH, true, RAW_HEIGHT, RAW_WIDTH,
-                RAW_DRAWABLE, PROCESSED_DRAWABLE);
+                RAW_DRAWABLE, PROCESSED_DRAWABLE, listener);
         this.setImageResource(mRawDrawable);
     }
 
