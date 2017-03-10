@@ -3,6 +3,8 @@ package com.example.jason.dinner_rush;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.jason.dinner_rush.Ingredients.Ingredient;
+
 import java.util.Hashtable;
 
 public class TradeActivity extends AppCompatActivity {
@@ -32,7 +34,7 @@ public class TradeActivity extends AppCompatActivity {
         // Current ingredient
         Ingredient cur_ig = ingredients.get(name);
 
-        if (cur_ig == null || cur_ig.quantity <= 0) {
+        if (cur_ig == null || !cur_ig.haveIngredient()) {
             // Doesn't exist in the hashtable, so silent return.
             return;
         } else {
@@ -45,12 +47,14 @@ public class TradeActivity extends AppCompatActivity {
         // Reduces OWN inventory by one, since you got confirmation that the ingredient sent.
         Ingredient cur_ig = ingredients.get(ing_name);
         if (cur_ig != null) {
-            if (cur_ig.quantity < 1) {
-                // This is an error. It should never be less than 0.
-                // TODO: report this error somehow.
-            } else {
-                cur_ig.quantity -= 1;
-            }
+            cur_ig.useIngredient();
+
+//            if (cur_ig.getQuantity() < 1) {
+//                // This is an error. It should never be less than 0.
+//                // TODO: report this error somehow.
+//            } else {
+//                cur_ig.setQuantity(cur_ig.getQuantity() - 1);
+//            }
         }
     }
 
@@ -62,7 +66,7 @@ public class TradeActivity extends AppCompatActivity {
         // Current ingredient
         Ingredient cur_ig = ingredients.get(receivedMessage);
         if (cur_ig != null) {
-            cur_ig.quantity += 1;
+//            cur_ig.setQuantity(cur_ig.getQuantity() + 1);
         }
 
         // After it is received, send a quick ACK saying it was received.

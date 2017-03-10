@@ -11,9 +11,26 @@
     tools:context="com.example.jason.dinner_rush.PlayActivity">
 
 
+    <LinearLayout android:id="@+id/carrots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+        
+        <ImageView
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:src="@drawable/carrot"/>
+        <ImageView
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:src="@drawable/carrot_chopped"/>
+        
+    </LinearLayout>
+    
     <TextView android:id="@+id/displayIngredients"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carrots"/>
 
     <Button android:id="@+id/processIngredient"
         android:layout_height="wrap_content"

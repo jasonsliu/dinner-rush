@@ -25,20 +25,20 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         inventory_ = new Inventory();
-        // updateCount();
+//        updateCount();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
     }
 
     protected void updateCount() {
-        TextView display = (TextView) findViewById(R.id.displayIngredients);
-        String displayText = "Potatoes: " + Integer.toString(inventory_.getIngredientCount("potato"))
-                + "; Fries: " + Integer.toString(inventory_.getIngredientCount("fries"));
-        display.setText(displayText);
+//        TextView display = (TextView) findViewById(R.id.displayIngredients);
+//        String displayText = "Potatoes: " + Integer.toString(inventory_.getIngredientCount("potato"))
+//                + "; Fries: " + Integer.toString(inventory_.getIngredientCount("fries"));
+//        display.setText(displayText);
     }
 
     protected void processIngredient(View view) {
-        inventory_.processIngredient("potato");
+//        inventory_.processIngredient("potato");
         updateCount();
     }
 

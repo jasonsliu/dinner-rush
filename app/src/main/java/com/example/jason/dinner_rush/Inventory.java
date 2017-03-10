@@ -1,51 +1,36 @@
 package com.example.jason.dinner_rush;
 
+import com.example.jason.dinner_rush.Ingredients.Ingredient;
+
 import java.util.Hashtable;
 
 /**
  * Created by byronc on 2/16/17.
  */
 
-
-class Ingredient {
-
-    Ingredient(String p, int q){
-        processed = p;
-        quantity = q;
-    }
-
-    String processed;
-    int quantity;
-};
-
 public class Inventory {
 
-    Inventory() {
-        ingredients_ = new Hashtable<String,Ingredient>();
-        Ingredient potato = new Ingredient("fries", 100);
-        ingredients_.put("potato", potato);
-        Ingredient fries = new Ingredient("", 0);
-        ingredients_.put("fries", fries);
+    public Inventory() {
+//        Ingredient potato = new Ingredient("potato", false, true);
+//        ingredients_.put(potato.getName(), potato);
+//        Ingredient carrot = new Ingredient("carrot", false, true);
+//        ingredients_.put(carrot.getName(), carrot);
     }
 
-    int getIngredientCount(String name) {
+    public boolean haveIngredient(String name) {
         Ingredient i = ingredients_.get(name);
-        int result = (i == null) ? -1 : i.quantity;
-        return result;
+        return i.haveIngredient();
     }
 
-	int processIngredient(String name) {
-		Ingredient first = ingredients_.get(name);
-		Ingredient processed = ingredients_.get(first.processed);
+	public void receiveIngredient(String name) {
+        Ingredient i = ingredients_.get(name);
+        i.getIngredient();
+    }
 
-        // no ingredients to process
-        if (first.quantity == 0) return -1;
+    public boolean useIngredient(String name) {
+        Ingredient i = ingredients_.get(name);
+        return i.useIngredient();
+    }
 
-		first.quantity -= 1;
-		processed.quantity += 1;
-
-		return processed.quantity;
-	}
-
-	private Hashtable<String, Ingredient> ingredients_;
+	private Hashtable<String, Ingredient> ingredients_ = new Hashtable<String, Ingredient>();
 }
