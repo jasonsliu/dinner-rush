@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jason.dinner_rush.Ingredients.Carrot;
+import com.example.jason.dinner_rush.Ingredients.Ingredient;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -17,6 +18,7 @@ public class GameActivity extends AppCompatActivity {
     CountDownTimer mTimer;
     public static final long SECONDS_PER_GAME = 60;
     TextView timeDisplay;
+    Ingredient.IngredientListener mIngredientListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +49,18 @@ public class GameActivity extends AppCompatActivity {
             }
         };
 
+        mIngredientListener = new Ingredient.IngredientListener() {
+            @Override
+            public void isFinished(Ingredient ingredient) {
+
+            }
+        };
+
         mContentView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Carrot c = new Carrot(GameActivity.this);
+                    Carrot c = new Carrot(GameActivity.this, mIngredientListener);
                     Log.d("test", String.valueOf(event.getX()));
                     Log.d("test", String.valueOf(event.getY()));
                     c.setLocation(500, 500);

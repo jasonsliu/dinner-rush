@@ -8,4 +8,5 @@
     <string name="timer_label">Time:</string>
     <string name="max_number">99</string>
     <string name="inventory">Inventory</string>
+    <string name="order">Order Recipe:</string>
 </resources>
