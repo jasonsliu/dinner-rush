@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,8 +23,8 @@ public class GameActivity extends AppCompatActivity {
     CountDownTimer mTimer;
     TextView timeDisplay;
     TextView scoreDisplay;
-    public ImageView INGREDIENT_PLACEHOLDER;
-    public TextView mOrderTextView;
+    ImageView INGREDIENT_PLACEHOLDER;
+    TextView mOrderTextView;
 
     Ingredient.IngredientListener mIngredientListener;
     Order.OrderListener mOrderListener;
@@ -46,6 +48,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        // Load views
         timeDisplay = (TextView) findViewById(R.id.time_display);
         scoreDisplay = (TextView) findViewById(R.id.score_display);
         mTimer = new CountDownTimer(SECONDS_PER_GAME*1000, 1000) {
@@ -60,7 +63,6 @@ public class GameActivity extends AppCompatActivity {
                 gameOver();
             }
         };
-
         INGREDIENT_PLACEHOLDER = (ImageView) findViewById(R.id.ingredient_placeholder);
         mOrderTextView = (TextView) findViewById(R.id.order);
 

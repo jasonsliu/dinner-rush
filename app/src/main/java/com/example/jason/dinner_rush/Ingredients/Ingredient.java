@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import com.example.jason.dinner_rush.utils.PixelHelper;
 
 /**
+ * Extend this class to add new ingredients.
+ * When creating new ingredients, register it with {@link IngredientGen}.
  * Created by byronc on 3/8/17.
  */
 
