@@ -47,7 +47,7 @@ public class Order {
         orderList.remove(index);
         setOrderText();
         if (orderList.size() == 0) {
-            mListener.finishedOrder(mOrderPointValue); // TODO: 3/10/2017 Implement points
+            mListener.finishedOrder(mOrderPointValue);
         }
     }
 
