@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
 
     private Ingredient mCurrIngredient;
     private Order mCurrOrder;
+    private int mScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class GameActivity extends AppCompatActivity {
         mOrderListener = new Order.OrderListener() {
             @Override
             public void finishedOrder(int pointsEarned) {
+                updateScore(pointsEarned);
                 mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
             }
         };
@@ -131,6 +133,11 @@ public class GameActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION));
+    }
+
+    private void updateScore(int numPointsToAdd) {
+        mScore += numPointsToAdd;
+        scoreDisplay.setText(String.valueOf(mScore));
     }
 
     @Override
