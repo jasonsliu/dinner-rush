@@ -1,19 +1,22 @@
 package com.example.jason.dinner_rush.Ingredients;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-import com.example.jason.dinner_rush.R;
 import com.example.jason.dinner_rush.utils.PixelHelper;
 
 /**
  * Created by byronc on 3/8/17.
  */
 
-public class Ingredient extends AppCompatImageView {
+public class Ingredient extends AppCompatImageView implements ValueAnimator.AnimatorUpdateListener {
 
     protected Context mContext;
     private String mName;
@@ -24,6 +27,7 @@ public class Ingredient extends AppCompatImageView {
     int mProcessedDrawable;
     IngredientListener mListener;
     boolean mIsActive = true;
+    private ValueAnimator mAnimator;
 
     public Ingredient(Context context) {
         super(context);
@@ -40,9 +44,8 @@ public class Ingredient extends AppCompatImageView {
         int dpWidth = PixelHelper.pixelsToDp(rawWidth, context);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dpWidth, dpHeight);
         setLayoutParams(params);
-        float xpos = placeholder.getX() - (dpHeight / 2);
-        float ypos = placeholder.getY() - (dpWidth / 2);
-        this.setLocation(xpos, ypos);
+        this.setX(placeholder.getX() - (dpHeight / 2));
+        this.setY(placeholder.getY() - (dpWidth / 2));
 
         mContext = context;
         mName = name;
@@ -91,12 +94,28 @@ public class Ingredient extends AppCompatImageView {
     public boolean onTouchEvent(MotionEvent event) {
         if (mIsActive && event.getAction() == MotionEvent.ACTION_DOWN) {
             process();
+            doBounce();
         }
         return super.onTouchEvent(event);
     }
 
+    private void doBounce() {
+        mAnimator = new ValueAnimator();
+        mAnimator.setDuration(70);
+        mAnimator.setFloatValues(getY(), getY() - 20f, getY());
+        mAnimator.setInterpolator(new LinearInterpolator());
+        mAnimator.setTarget(this);
+        mAnimator.addUpdateListener(this);
+        mAnimator.start();
+    }
+    
     public void setInactive() {
         mIsActive = false;
+    }
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+        this.setY((float) mAnimator.getAnimatedValue());
     }
 
     public interface IngredientListener {
