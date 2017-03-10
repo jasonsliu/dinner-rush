@@ -31,4 +31,9 @@ public class IngredientGen {
         return names.get(index);
     }
 
+    public class IngredientInfo {
+        public String name;
+        public int pointValue;
+    }
+
 }

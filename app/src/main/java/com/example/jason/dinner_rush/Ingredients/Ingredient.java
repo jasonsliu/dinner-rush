@@ -22,17 +22,18 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
     private String mName;
     private boolean m_isMine;
     private boolean m_haveIt;
-    int mHealth;
+    private int mHealth;
     private int mPointValue;
-    int mRawDrawable;
-    int mProcessedDrawable;
-    IngredientListener mListener;
+    protected int mRawDrawable;
+    protected int mProcessedDrawable;
+    private IngredientListener mListener;
     boolean mIsActive = true;
     private ValueAnimator mAnimator;
 
-    public Ingredient(Context context, String name) {
+    public Ingredient(Context context, String name, int pointValue) {
         super(context);
         mName = name;
+        mPointValue = pointValue;
     }
 
     public Ingredient(Context context, String name,
