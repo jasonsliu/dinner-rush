@@ -20,7 +20,7 @@ public class Carrot extends Ingredient {
     public static final int PROCESSED_DRAWABLE = R.drawable.carrot_chopped;
 
     public Carrot(Context context) {
-        super(context, NAME);
+        super(context, NAME, POINT_VALUE);
     }
 
     public Carrot(Context context, ImageView view, IngredientListener listener) {
