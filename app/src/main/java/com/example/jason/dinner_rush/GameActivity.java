@@ -15,14 +15,18 @@ import com.example.jason.dinner_rush.Ingredients.Ingredient;
 
 public class GameActivity extends AppCompatActivity {
 
+    public static final long SECONDS_PER_GAME = 60;
+
     private ViewGroup mContentView;
     CountDownTimer mTimer;
-    public static final long SECONDS_PER_GAME = 60;
     TextView timeDisplay;
-    public static ImageView INGREDIENT_PLACEHOLDER;
+    public ImageView INGREDIENT_PLACEHOLDER;
+    public TextView mOrderTextView;
     Ingredient.IngredientListener mIngredientListener;
+    Order.OrderListener mOrderListener;
 
-    Ingredient mCurrIngredient;
+    private Ingredient mCurrIngredient;
+    private Order mCurrOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +58,22 @@ public class GameActivity extends AppCompatActivity {
         };
 
         INGREDIENT_PLACEHOLDER = (ImageView) findViewById(R.id.ingredient_placeholder);
+        mOrderTextView = (TextView) findViewById(R.id.order);
 
         mIngredientListener = new Ingredient.IngredientListener() {
             @Override
             public void isFinished(Ingredient ingredient) {
                 Log.d("oh", "Chopped!");
+                mCurrOrder.addIngredient(ingredient);
                 Carrot c = new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
                 putIngredient(c);
+            }
+        };
+
+        mOrderListener = new Order.OrderListener() {
+            @Override
+            public void finishedOrder(int pointsEarned) {
+                mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
             }
         };
 
@@ -100,6 +113,7 @@ public class GameActivity extends AppCompatActivity {
     private void startGame() {
         // TODO: 3/8/2017 Implement this.
         mTimer.start();
+        mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
     }
 
     private void gameOver() {
