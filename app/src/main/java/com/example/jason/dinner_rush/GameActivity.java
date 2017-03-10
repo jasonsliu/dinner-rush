@@ -10,8 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.jason.dinner_rush.Ingredients.Avocado;
+import com.example.jason.dinner_rush.Ingredients.Bacon;
 import com.example.jason.dinner_rush.Ingredients.Carrot;
+import com.example.jason.dinner_rush.Ingredients.Tomato;
+import com.example.jason.dinner_rush.Ingredients.Lettuce;
+import com.example.jason.dinner_rush.Ingredients.Corn;
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
+
+import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -69,8 +76,35 @@ public class GameActivity extends AppCompatActivity {
             public void isFinished(Ingredient ingredient) {
                 Log.d("oh", "Chopped!");
                 mCurrOrder.addIngredient(ingredient);
-                Carrot c = new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
-                putIngredient(c);
+                Carrot ca = new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
+                Tomato t = new Tomato(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
+                Lettuce l = new Lettuce(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
+                Corn co = new Corn(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
+                Avocado a = new Avocado(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
+                Bacon b = new Bacon(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
+                Random random = new Random();
+
+                switch(random.nextInt()%6) {
+                    case 0:
+                        putIngredient(ca);
+                        break;
+                    case 1:
+                        putIngredient(t);
+                        break;
+                    case 2:
+                        putIngredient(l);
+                        break;
+                    case 3:
+                        putIngredient(co);
+                        break;
+                    case 4:
+                        putIngredient(a);
+                        break;
+                    case 5:
+                        putIngredient(b);
+                        break;
+                }
+
             }
         };
 
