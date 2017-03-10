@@ -20,7 +20,11 @@ public class IngredientGen {
     public IngredientGen(Context context) {
         // Add all the ingredients here
         ingredients.add(new Carrot(context));
-
+        ingredients.add(new Lettuce(context));
+        ingredients.add(new Tomato(context));
+        ingredients.add(new Corn(context));
+        ingredients.add(new Avocado(context));
+        ingredients.add(new Bacon(context));
         for (int i = 0; i < ingredients.size(); i++) {
             names.add(ingredients.get(i).getName());
         }
