@@ -14,7 +14,7 @@ import java.util.Random;
 public class IngredientGen {
 
     ArrayList<Ingredient> ingredients = new ArrayList<>();
-    ArrayList<String> names = new ArrayList<>();
+    ArrayList<IngredientInfo> info = new ArrayList<>();
     Random random = new Random();
 
     public IngredientGen(Context context) {
@@ -22,16 +22,21 @@ public class IngredientGen {
         ingredients.add(new Carrot(context));
 
         for (int i = 0; i < ingredients.size(); i++) {
-            names.add(ingredients.get(i).getName());
+            Ingredient ing = ingredients.get(i);
+            info.add(new IngredientInfo(ing.getName(), ing.getPointValue()));
         }
     }
 
-    public String getIngredientName() {
-        int index = random.nextInt(names.size());
-        return names.get(index);
+    public IngredientInfo getRandIngredientInfo() {
+        int index = random.nextInt(info.size());
+        return info.get(index);
     }
 
     public class IngredientInfo {
+        IngredientInfo(String name, int pointValue) {
+            this.name = name;
+            this.pointValue = pointValue;
+        }
         public String name;
         public int pointValue;
     }

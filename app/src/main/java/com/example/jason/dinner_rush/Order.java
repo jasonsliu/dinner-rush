@@ -20,7 +20,7 @@ public class Order {
     private final TextView mOrderText;
     private final OrderListener mListener;
     private ArrayList<String> orderList = new ArrayList<>();
-    private int mOrderPointValue;
+    private int mOrderPointValue = 0;
 
 
     public Order(Context context, TextView orderText, OrderListener listener) {
@@ -34,7 +34,9 @@ public class Order {
 
         // Generate order
         for (int i = 0; i < mNumIngredients; i++) {
-            orderList.add(ingGen.getIngredientName());
+            IngredientGen.IngredientInfo ingInfo = ingGen.getRandIngredientInfo();
+            orderList.add(ingInfo.name);
+            mOrderPointValue += ingInfo.pointValue;
         }
         setOrderText();
     }
@@ -45,7 +47,7 @@ public class Order {
         orderList.remove(index);
         setOrderText();
         if (orderList.size() == 0) {
-            mListener.finishedOrder(0); // TODO: 3/10/2017 Implement points
+            mListener.finishedOrder(mOrderPointValue);
         }
     }
 
