@@ -20,8 +20,10 @@ public class GameActivity extends AppCompatActivity {
     private ViewGroup mContentView;
     CountDownTimer mTimer;
     TextView timeDisplay;
+    TextView scoreDisplay;
     public ImageView INGREDIENT_PLACEHOLDER;
     public TextView mOrderTextView;
+
     Ingredient.IngredientListener mIngredientListener;
     Order.OrderListener mOrderListener;
 
@@ -44,6 +46,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         timeDisplay = (TextView) findViewById(R.id.time_display);
+        scoreDisplay = (TextView) findViewById(R.id.score_display);
         mTimer = new CountDownTimer(SECONDS_PER_GAME*1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -114,6 +117,7 @@ public class GameActivity extends AppCompatActivity {
         // TODO: 3/8/2017 Implement this.
         mTimer.start();
         mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
+        scoreDisplay.setText("0");
     }
 
     private void gameOver() {

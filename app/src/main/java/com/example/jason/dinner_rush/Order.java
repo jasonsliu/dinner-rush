@@ -20,6 +20,7 @@ public class Order {
     private final TextView mOrderText;
     private final OrderListener mListener;
     private ArrayList<String> orderList = new ArrayList<>();
+    private int mOrderPointValue;
 
 
     public Order(Context context, TextView orderText, OrderListener listener) {
