@@ -1,6 +1,9 @@
 package com.example.jason.dinner_rush;
 
 import android.content.Context;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
@@ -19,12 +22,14 @@ public class Order {
 
     private final TextView mOrderText;
     private final OrderListener mListener;
+    private final Animation animFadeIn;
     private ArrayList<String> orderList = new ArrayList<>();
     private int mOrderPointValue = 0;
 
 
     public Order(Context context, TextView orderText, OrderListener listener) {
         Random random = new Random();
+        animFadeIn = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.fade_in);
         mOrderText = orderText;
         mListener = listener;
         IngredientGen ingGen = new IngredientGen(context);
@@ -39,6 +44,7 @@ public class Order {
             mOrderPointValue += ingInfo.pointValue;
         }
         setOrderText();
+        mOrderText.startAnimation(animFadeIn);
     }
 
     public void addIngredient(Ingredient ing) {
