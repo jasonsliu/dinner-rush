@@ -48,7 +48,7 @@
                 tools:ignore="RelativeOverlap" />
 
             <TextView
-                android:id="@+id/level_display"
+                android:id="@+id/score_display"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"

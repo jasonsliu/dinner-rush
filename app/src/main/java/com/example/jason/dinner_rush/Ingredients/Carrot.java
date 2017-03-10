@@ -13,6 +13,7 @@ public class Carrot extends Ingredient {
 
     public static final String NAME = "Carrot";
     public static final int HEALTH = 10;
+    public static final int POINT_VALUE = 10;
     public static final int RAW_HEIGHT = 100;
     public static final int RAW_WIDTH = 100;
     public static final int RAW_DRAWABLE = R.drawable.carrot;
@@ -24,7 +25,8 @@ public class Carrot extends Ingredient {
 
     public Carrot(Context context, ImageView view, IngredientListener listener) {
         super(context, NAME,
-                HEALTH, true, RAW_HEIGHT, RAW_WIDTH,
+                HEALTH, POINT_VALUE, true,
+                RAW_HEIGHT, RAW_WIDTH,
                 RAW_DRAWABLE, PROCESSED_DRAWABLE, view, listener);
         this.setImageResource(mRawDrawable);
     }
