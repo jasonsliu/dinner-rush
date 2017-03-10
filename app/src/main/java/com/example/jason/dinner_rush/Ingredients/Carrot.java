@@ -12,7 +12,7 @@ import com.example.jason.dinner_rush.R;
 public class Carrot extends Ingredient {
 
     public static final String NAME = "Carrot";
-    public static final int HEALTH = 10;
+    public static final int HEALTH = 6;
     public static final int POINT_VALUE = 10;
     public static final int RAW_HEIGHT = 100;
     public static final int RAW_WIDTH = 100;

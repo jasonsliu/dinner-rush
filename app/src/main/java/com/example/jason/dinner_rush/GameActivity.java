@@ -55,69 +55,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        // Load views
-        timeDisplay = (TextView) findViewById(R.id.time_display);
-        scoreDisplay = (TextView) findViewById(R.id.score_display);
-        mTimer = new CountDownTimer(SECONDS_PER_GAME*1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeDisplay.setText(String.valueOf(millisUntilFinished / 1000));
-            }
-
-            @Override
-            public void onFinish() {
-                timeDisplay.setText(String.valueOf(0));
-                gameOver();
-            }
-        };
-        INGREDIENT_PLACEHOLDER = (ImageView) findViewById(R.id.ingredient_placeholder);
-        mOrderTextView = (TextView) findViewById(R.id.order);
-
-        mIngredientListener = new Ingredient.IngredientListener() {
-            @Override
-            public void isFinished(Ingredient ingredient) {
-                Log.d("oh", "Chopped!");
-                mCurrOrder.addIngredient(ingredient);
-                Carrot ca = new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
-                Tomato t = new Tomato(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
-                Lettuce l = new Lettuce(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
-                Corn co = new Corn(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
-                Avocado a = new Avocado(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
-                Bacon b = new Bacon(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
-                Random random = new Random();
-
-                switch(random.nextInt()%6) {
-                    case 0:
-                        putIngredient(ca);
-                        break;
-                    case 1:
-                        putIngredient(t);
-                        break;
-                    case 2:
-                        putIngredient(l);
-                        break;
-                    case 3:
-                        putIngredient(co);
-                        break;
-                    case 4:
-                        putIngredient(a);
-                        break;
-                    case 5:
-                        putIngredient(b);
-                        break;
-                }
-
-            }
-        };
-
-        mOrderListener = new Order.OrderListener() {
-            @Override
-            public void finishedOrder(int pointsEarned) {
-                updateScore(pointsEarned);
-                mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
-            }
-        };
-
         mContentView.setOnTouchListener(new View.OnTouchListener() {
             boolean touched;
 
@@ -138,10 +75,72 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        LoadViews();
+        InitListeners();
         startGame();
     }
 
-    public void putIngredient(Ingredient ing) {
+    private void InitListeners() {
+        mIngredientListener = new Ingredient.IngredientListener() {
+            @Override
+            public void isFinished(Ingredient ingredient) {
+                Log.d("oh", "Chopped!");
+                mCurrOrder.addIngredient(ingredient);
+                Random random = new Random();
+
+                switch(random.nextInt()%6) {
+                    case 0:
+                        putIngredient(new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
+                        break;
+                    case 1:
+                        putIngredient(new Tomato(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
+                        break;
+                    case 2:
+                        putIngredient(new Lettuce(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
+                        break;
+                    case 3:
+                        putIngredient(new Corn(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
+                        break;
+                    case 4:
+                        putIngredient(new Avocado(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
+                        break;
+                    case 5:
+                        putIngredient(new Bacon(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
+                        break;
+                }
+
+            }
+        };
+
+        mOrderListener = new Order.OrderListener() {
+            @Override
+            public void finishedOrder(int pointsEarned) {
+                updateScore(pointsEarned);
+                mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
+            }
+        };
+    }
+
+    private void LoadViews() {
+        timeDisplay = (TextView) findViewById(R.id.time_display);
+        scoreDisplay = (TextView) findViewById(R.id.score_display);
+        mTimer = new CountDownTimer(SECONDS_PER_GAME*1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeDisplay.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+
+            @Override
+            public void onFinish() {
+                timeDisplay.setText(String.valueOf(0));
+                gameOver();
+            }
+        };
+        INGREDIENT_PLACEHOLDER = (ImageView) findViewById(R.id.ingredient_placeholder);
+        mOrderTextView = (TextView) findViewById(R.id.order);
+    }
+
+    private void putIngredient(Ingredient ing) {
         if (mCurrIngredient != null) {
             // replace old ingredient
             mContentView.removeView(mCurrIngredient);
