@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jason.dinner_rush.Ingredients.Carrot;
@@ -18,7 +19,10 @@ public class GameActivity extends AppCompatActivity {
     CountDownTimer mTimer;
     public static final long SECONDS_PER_GAME = 60;
     TextView timeDisplay;
+    public static ImageView INGREDIENT_PLACEHOLDER;
     Ingredient.IngredientListener mIngredientListener;
+
+    Ingredient mCurrIngredient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,28 +53,48 @@ public class GameActivity extends AppCompatActivity {
             }
         };
 
+        INGREDIENT_PLACEHOLDER = (ImageView) findViewById(R.id.ingredient_placeholder);
+
         mIngredientListener = new Ingredient.IngredientListener() {
             @Override
             public void isFinished(Ingredient ingredient) {
-
+                Log.d("oh", "Chopped!");
+                Carrot c = new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
+                putIngredient(c);
             }
         };
 
         mContentView.setOnTouchListener(new View.OnTouchListener() {
+            boolean touched;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Carrot c = new Carrot(GameActivity.this, mIngredientListener);
+                    Carrot c = new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
                     Log.d("test", String.valueOf(event.getX()));
                     Log.d("test", String.valueOf(event.getY()));
-                    c.setLocation(500, 500);
-                    mContentView.addView(c);
+
+                    if(!touched) {
+                        mContentView.addView(c);
+                        mCurrIngredient = c;
+                    }
+                    touched = true;
                 }
                 return false;
             }
         });
 
         startGame();
+    }
+
+    public void putIngredient(Ingredient ing) {
+        if (mCurrIngredient != null) {
+            // replace old ingredient
+            mContentView.removeView(mCurrIngredient);
+            mCurrIngredient.setInactive();
+        }
+        mCurrIngredient = ing;
+        mContentView.addView(ing);
     }
 
     private void startGame() {

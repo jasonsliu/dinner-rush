@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.example.jason.dinner_rush.R;
 import com.example.jason.dinner_rush.utils.PixelHelper;
 
 /**
@@ -15,13 +17,13 @@ public class Ingredient extends AppCompatImageView {
 
     protected Context mContext;
     private String mName;
-    protected boolean mProcessed;
     private boolean m_isMine;
     private boolean m_haveIt;
     int mHealth;
     int mRawDrawable;
     int mProcessedDrawable;
     IngredientListener mListener;
+    boolean mIsActive = true;
 
     public Ingredient(Context context) {
         super(context);
@@ -29,14 +31,18 @@ public class Ingredient extends AppCompatImageView {
 
     public Ingredient(Context context, String name,
                       int health, boolean mine, int rawHeight, int rawWidth,
-                      int rawImage, int processedImage, IngredientListener listener) {
+                      int rawImage, int processedImage,
+                      ImageView placeholder, IngredientListener listener) {
         super(context);
 
-        // convert from px to dp
+        // set up location for image display
         int dpHeight = PixelHelper.pixelsToDp(rawHeight, context);
         int dpWidth = PixelHelper.pixelsToDp(rawWidth, context);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dpWidth, dpHeight);
         setLayoutParams(params);
+        float xpos = placeholder.getX() - (dpHeight / 2);
+        float ypos = placeholder.getY() - (dpWidth / 2);
+        this.setLocation(xpos, ypos);
 
         mContext = context;
         mName = name;
@@ -55,21 +61,13 @@ public class Ingredient extends AppCompatImageView {
 
     private void process() {
         mHealth--;
-        if (mHealth <= 0) {
-            setProcessed(true);
+        if (mHealth > 0) {
+            this.setImageResource(mRawDrawable);
+        } else {
+            this.setImageResource(mProcessedDrawable);
         }
         if (mHealth <= -1) {
-            // mListener.isFinished(this);
-        }
-    }
-
-    public boolean getProcessed() { return mProcessed; }
-    private void setProcessed(Boolean p) {
-        mProcessed = p;
-        if (p) {
-            this.setImageResource(mProcessedDrawable);
-        } else {
-            this.setImageResource(mRawDrawable);
+            mListener.isFinished(this);
         }
     }
 
@@ -91,10 +89,14 @@ public class Ingredient extends AppCompatImageView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (mIsActive && event.getAction() == MotionEvent.ACTION_DOWN) {
             process();
         }
         return super.onTouchEvent(event);
+    }
+
+    public void setInactive() {
+        mIsActive = false;
     }
 
     public interface IngredientListener {
