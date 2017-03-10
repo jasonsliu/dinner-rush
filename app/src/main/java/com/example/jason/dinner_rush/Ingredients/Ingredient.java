@@ -29,8 +29,9 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
     boolean mIsActive = true;
     private ValueAnimator mAnimator;
 
-    public Ingredient(Context context) {
+    public Ingredient(Context context, String name) {
         super(context);
+        mName = name;
     }
 
     public Ingredient(Context context, String name,
