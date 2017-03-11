@@ -1,13 +1,15 @@
 package com.example.jason.dinner_rush;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
+import android.widget.Button;
 
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
 
 import java.util.Hashtable;
 
-public class TradeActivity extends AppCompatActivity {
+public class TradeActivity extends FragmentActivity {
 
     // Assuming somehow we get this from the other play activity
     Hashtable<String,Ingredient> ingredients = new Hashtable<String,Ingredient>();
@@ -20,6 +22,30 @@ public class TradeActivity extends AppCompatActivity {
 
         // TODO: get ingredient's current hashtable from other activities
         // ingredients = savedInstanceState.blahblahblah
+
+//         FRAGMENT STUFF
+//        android.app.FragmentManager fm = getFragmentManager();
+//        addShowHideListener(R.id.openInventoryButton, fm.findFragmentById(R.id.inventoryFragment));
+    }
+
+    void addShowHideListener(int buttonId, final Fragment fragment) {
+        final Button button = (Button)findViewById(buttonId);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.setCustomAnimations(android.R.animator.fade_in,
+//                        android.R.animator.fade_out);
+//                if (fragment.isHidden()) {
+//                    ft.show(fragment);
+//                    button.setText("Hide");
+//                } else {
+//                    ft.hide(fragment);
+//                    button.setText("Show");
+//                }
+//                ft.commit();
+//            }
+//        });
     }
 
     void receiveMessage() {
@@ -73,11 +99,6 @@ public class TradeActivity extends AppCompatActivity {
     }
 
     // THESE FUNCTIONS ARE CALLED BY THE BUTTONS IN DISPLAY XML
-
-    // Connected to goBack button
-    void goBack() {
-        // Return to main screen.
-    }
 
     // Connected to sendCarrotView button
     void sendCarrot() {
