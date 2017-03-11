@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/inventory">
+
+    <TextView
+        android:id="@+id/recipe_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="24dp"
+        android:paddingStart="24dp"
+        android:paddingBottom="16dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/inventory"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <GridLayout
+        android:id="@+id/myIngredientGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/recipe_head">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_column="0"
+            android:layout_row="0"
+            app:srcCompat="@drawable/corn" />
+
+        <Button
+            android:id="@+id/getCornButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="1"
+            android:text="@string/use"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/sendCornButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="2"
+            android:text="@string/send"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_column="1"
+            android:layout_row="0"
+            app:srcCompat="@drawable/lettuce" />
+
+        <Button
+            android:id="@+id/getLettuceButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="1"
+            android:text="@string/use"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/sendLettuceButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="2"
+            android:text="@string/send"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_column="2"
+            android:layout_row="0"
+            app:srcCompat="@drawable/tomato" />
+
+        <Button
+            android:id="@+id/getTomatoButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_row="1"
+            android:text="@string/use"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/sendTomatoButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_row="2"
+            android:text="@string/send"
+            android:textSize="12sp" />
+
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/yourIngredientGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/myIngredientGrid"
+        android:paddingTop="16dp">
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_column="0"
+            android:layout_row="0"
+            app:srcCompat="@drawable/carrot" />
+
+        <Button
+            android:id="@+id/getCarrotButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="1"
+            android:text="@string/use"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_column="1"
+            android:layout_row="0"
+            app:srcCompat="@drawable/avocado" />
+
+        <Button
+            android:id="@+id/getAvocadoButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="1"
+            android:text="@string/use"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_column="2"
+            android:layout_row="0"
+            app:srcCompat="@drawable/bacon" />
+
+        <Button
+            android:id="@+id/getBaconButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_row="1"
+            android:text="@string/use"
+            android:textSize="12sp" />
+
+    </GridLayout>
+
+</RelativeLayout>
