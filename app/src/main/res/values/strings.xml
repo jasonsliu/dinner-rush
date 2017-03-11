@@ -8,7 +8,5 @@
     <string name="timer_label">Time:</string>
     <string name="max_number">99</string>
     <string name="inventory">Inventory</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="order">Order Recipe:</string>
 </resources>
