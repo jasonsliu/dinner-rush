@@ -62,9 +62,6 @@ public class GameActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     Carrot c = new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
-                    Log.d("test", String.valueOf(event.getX()));
-                    Log.d("test", String.valueOf(event.getY()));
-
                     if(!touched) {
                         mContentView.addView(c);
                         mCurrIngredient = c;
@@ -84,11 +81,10 @@ public class GameActivity extends AppCompatActivity {
         mIngredientListener = new Ingredient.IngredientListener() {
             @Override
             public void isFinished(Ingredient ingredient) {
-                Log.d("oh", "Chopped!");
                 mCurrOrder.addIngredient(ingredient);
                 Random random = new Random();
 
-                switch(random.nextInt()%6) {
+                switch(random.nextInt(6)) {
                     case 0:
                         putIngredient(new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
                         break;
@@ -117,6 +113,11 @@ public class GameActivity extends AppCompatActivity {
             public void finishedOrder(int pointsEarned) {
                 updateScore(pointsEarned);
                 mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
+            }
+
+            @Override
+            public void botchedOrder(int pointPenalty) {
+                updateScore(-pointPenalty);
             }
         };
     }

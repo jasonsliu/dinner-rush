@@ -1,7 +1,6 @@
 package com.example.jason.dinner_rush;
 
 import android.content.Context;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -22,16 +21,18 @@ public class Order {
 
     private final TextView mOrderText;
     private final OrderListener mListener;
-    private final Animation animFadeIn;
+    private Animation animBlink;
+
+    private ArrayList<String> originalOrderList = new ArrayList<>();
     private ArrayList<String> orderList = new ArrayList<>();
     private int mOrderPointValue = 0;
 
 
     public Order(Context context, TextView orderText, OrderListener listener) {
         Random random = new Random();
-        animFadeIn = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.fade_in);
         mOrderText = orderText;
         mListener = listener;
+        animBlink = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.blink);
         IngredientGen ingGen = new IngredientGen(context);
 
         // Choose number of ingredients in this order
@@ -43,21 +44,33 @@ public class Order {
             orderList.add(ingInfo.name);
             mOrderPointValue += ingInfo.pointValue;
         }
-        setOrderText();
+
+        originalOrderList.addAll(orderList);
+
+        updateOrderText();
+        Animation animFadeIn = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.fade_in);
         mOrderText.startAnimation(animFadeIn);
     }
 
     public void addIngredient(Ingredient ing) {
         int index = orderList.indexOf(ing.getName());
-        if(index < 0) return; // TODO: 3/10/2017 Punish for incorrect ingredient
+        if(index < 0) {
+            // Start over since added wrong ingredient
+            orderList.clear();
+            orderList.addAll(originalOrderList);
+            mOrderText.startAnimation(animBlink);
+            updateOrderText();
+            mListener.botchedOrder(mOrderPointValue / 10);
+            return;
+        }
         orderList.remove(index);
-        setOrderText();
+        updateOrderText();
         if (orderList.size() == 0) {
             mListener.finishedOrder(mOrderPointValue);
         }
     }
 
-    private void setOrderText() {
+    private void updateOrderText() {
         String order = "";
         for (int i = 0; i < orderList.size(); i++) {
             order += orderList.get(i);
@@ -68,6 +81,7 @@ public class Order {
 
     public interface OrderListener {
         void finishedOrder(int pointsEarned);
+        void botchedOrder(int pointPenalty);
     }
 
 }
