@@ -16,6 +16,6 @@ public class InventoryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.inventory_fragment, container, false);
+        return inflater.inflate(R.layout.p1_inventory_fragment, container, false);
     }
 }

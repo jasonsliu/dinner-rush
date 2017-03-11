@@ -81,7 +81,7 @@
         <ImageView
             android:layout_width="164dp"
             android:layout_height="83dp"
-            app:srcCompat="@drawable/onion"
+            app:srcCompat="@drawable/carrot"
             android:id="@+id/onionView"
             android:layout_row="3"
             android:layout_column="0" />
