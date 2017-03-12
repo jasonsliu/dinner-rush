@@ -7,24 +7,23 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jason.dinner_rush.Ingredients.Avocado;
 import com.example.jason.dinner_rush.Ingredients.Bacon;
 import com.example.jason.dinner_rush.Ingredients.Carrot;
-import com.example.jason.dinner_rush.Ingredients.Tomato;
-import com.example.jason.dinner_rush.Ingredients.Lettuce;
 import com.example.jason.dinner_rush.Ingredients.Corn;
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
+import com.example.jason.dinner_rush.Ingredients.Lettuce;
+import com.example.jason.dinner_rush.Ingredients.Tomato;
 
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
     public static final long SECONDS_PER_GAME = 60;
+    public static final String TAG = "GameActivity";
 
     private ViewGroup mContentView;
     CountDownTimer mTimer;
@@ -32,6 +31,7 @@ public class GameActivity extends AppCompatActivity {
     TextView scoreDisplay;
     ImageView INGREDIENT_PLACEHOLDER;
     TextView mOrderTextView;
+    P1InventoryFragment mFrag = new P1InventoryFragment();
 
     Ingredient.IngredientListener mIngredientListener;
     Order.OrderListener mOrderListener;
@@ -152,7 +152,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startGame() {
-        // TODO: 3/8/2017 Implement this.
         mTimer.start();
         mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
         scoreDisplay.setText("0");
@@ -174,6 +173,38 @@ public class GameActivity extends AppCompatActivity {
     private void updateScore(int numPointsToAdd) {
         mScore += numPointsToAdd;
         scoreDisplay.setText(String.valueOf(mScore));
+    }
+
+    public void inventoryButtonPress(View view) {
+        if (!mFrag.isVisible()) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.inventory_container, mFrag)
+                    .commit();
+            findViewById(R.id.inventory_container).bringToFront();
+        } else {
+            getFragmentManager().beginTransaction()
+                    .remove(mFrag)
+                    .commit();
+        }
+    }
+
+    public void getIngredientButtonPress(View view) {
+        switch(view.getId()) {
+            case R.id.getCarrotButton:
+                Log.d(TAG, "acrrr");
+                break;
+            case R.id.getAvocadoButton:
+                break;
+            case R.id.getBaconButton:
+                Log.d(TAG, "bancn");
+                break;
+            case R.id.getCornButton:
+                break;
+            case R.id.getLettuceButton:
+                break;
+            case R.id.getTomatoButton:
+                break;
+        }
     }
 
     @Override
