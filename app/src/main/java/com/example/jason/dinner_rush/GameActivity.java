@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,8 +16,6 @@ import com.example.jason.dinner_rush.Ingredients.Corn;
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
 import com.example.jason.dinner_rush.Ingredients.Lettuce;
 import com.example.jason.dinner_rush.Ingredients.Tomato;
-
-import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -56,23 +53,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        mContentView.setOnTouchListener(new View.OnTouchListener() {
-            boolean touched;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Carrot c = new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener);
-                    if(!touched) {
-                        mContentView.addView(c);
-                        mCurrIngredient = c;
-                    }
-                    touched = true;
-                }
-                return false;
-            }
-        });
-
         LoadViews();
         InitListeners();
         startGame();
@@ -83,28 +63,8 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void isFinished(Ingredient ingredient) {
                 mCurrOrder.addIngredient(ingredient);
-                Random random = new Random();
 
-                switch(random.nextInt(6)) {
-                    case 0:
-                        putIngredient(new Carrot(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
-                        break;
-                    case 1:
-                        putIngredient(new Tomato(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
-                        break;
-                    case 2:
-                        putIngredient(new Lettuce(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
-                        break;
-                    case 3:
-                        putIngredient(new Corn(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
-                        break;
-                    case 4:
-                        putIngredient(new Avocado(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
-                        break;
-                    case 5:
-                        putIngredient(new Bacon(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
-                        break;
-                }
+                putIngredient(null);
             }
         };
 
@@ -144,15 +104,20 @@ public class GameActivity extends AppCompatActivity {
     private void putIngredient(Ingredient ing) {
         if (mCurrIngredient != null) {
             // replace old ingredient
+            Log.d(TAG, "Replacing old ingredient!");
             mContentView.removeView(mCurrIngredient);
             mCurrIngredient.setInactive();
         }
+
         mCurrIngredient = ing;
-        mContentView.addView(ing);
+        if (ing != null) {
+            mContentView.addView(ing);
+        }
     }
 
     private void startGame() {
         mTimer.start();
+        mInventory = new p1Inventory(GameActivity.this); // TODO: 3/12/2017 Choose appropriate inventory based on player 
         mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
         scoreDisplay.setText("0");
     }
@@ -189,22 +154,41 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void getIngredientButtonPress(View view) {
-        Ingredient getThis;
+        Ingredient getThis = null;
+
         switch(view.getId()) {
             case R.id.getCarrotButton:
                 getThis = new Carrot(GameActivity.this);
                 break;
             case R.id.getAvocadoButton:
+                getThis = new Avocado(GameActivity.this);
                 break;
             case R.id.getBaconButton:
-                Log.d(TAG, "bancn");
+                getThis = new Bacon(GameActivity.this);
                 break;
             case R.id.getCornButton:
+                getThis = new Corn(GameActivity.this);
                 break;
             case R.id.getLettuceButton:
+                getThis = new Lettuce(GameActivity.this);
                 break;
             case R.id.getTomatoButton:
+                getThis = new Tomato(GameActivity.this);
                 break;
+        }
+
+        if (getThis == null) {
+            // this should never happen
+            Exception e = new Exception();
+            e.printStackTrace();
+        }
+
+        Ingredient received = mInventory.getIngredient(getThis);
+        if (received != null) {
+            Log.d(TAG, "Got a " + received.getName());
+            received.setUpForUse(INGREDIENT_PLACEHOLDER, mIngredientListener);
+            putIngredient(received);
+            inventoryButtonPress(null);
         }
     }
 

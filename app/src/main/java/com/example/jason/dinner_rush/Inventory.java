@@ -2,12 +2,9 @@ package com.example.jason.dinner_rush;
 
 import android.content.Context;
 
-import com.example.jason.dinner_rush.Ingredients.Carrot;
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
 
 /**
  * Created by byronc on 2/16/17.
@@ -26,22 +23,18 @@ public class Inventory {
     }
 
     public Ingredient getIngredient(Ingredient ing) {
-        if (ing == null) {
-            return null;
-        }
+        if (ing != null) {
+            if (ing.getName().equals(mForeignName)) {
+                mForeignName = null; // use the ingredient
+                return ing;
+            }
 
-
-        if (ing.getName().equals(mForeignName)) {
-            mForeignName = null;
-            return ing;
-        }
-
-        for (int k = 0; k < mOwned.size(); k++) {
-            if (ing.getName().equals(mOwned.get(k).getName())) {
-                return mOwned.get(k);
+            for (int k = 0; k < mOwned.size(); k++) {
+                if (ing.getName().equals(mOwned.get(k).getName())) {
+                    return ing;
+                }
             }
         }
-
         return null;
     }
 

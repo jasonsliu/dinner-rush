@@ -23,6 +23,7 @@ public class Lettuce extends Ingredient {
                 HEALTH, POINT_VALUE,
                 RAW_HEIGHT, RAW_WIDTH,
                 RAW_DRAWABLE, PROCESSED_DRAWABLE, null, null);
+        this.setImageResource(mRawDrawable);
     }
 
     public Lettuce(Context context, ImageView view, IngredientListener listener) {

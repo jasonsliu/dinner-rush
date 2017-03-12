@@ -51,10 +51,12 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
         mProcessedDrawable = processedImage;
         mListener = listener;
 
-        setLocation(placeholder);
+        if (placeholder != null) {
+            setLocation(placeholder);
+        }
     }
 
-    public void setupForUse(ImageView placeholder, IngredientListener listener) {
+    public void setUpForUse(ImageView placeholder, IngredientListener listener) {
         mListener = listener;
         setLocation(placeholder);
     }

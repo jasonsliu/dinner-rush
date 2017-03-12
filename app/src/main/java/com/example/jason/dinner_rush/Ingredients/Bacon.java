@@ -23,6 +23,7 @@ public class Bacon extends Ingredient {
                 HEALTH, POINT_VALUE,
                 RAW_HEIGHT, RAW_WIDTH,
                 RAW_DRAWABLE, PROCESSED_DRAWABLE, null, null);
+        this.setImageResource(mRawDrawable);
     }
 
     public Bacon(Context context, ImageView view, IngredientListener listener) {
