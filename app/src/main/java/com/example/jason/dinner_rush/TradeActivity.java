@@ -34,7 +34,7 @@ public class TradeActivity extends AppCompatActivity {
         // Current ingredient
         Ingredient cur_ig = ingredients.get(name);
 
-        if (cur_ig == null || !cur_ig.haveIngredient()) {
+        if (cur_ig == null) { // || !cur_ig.haveIngredient()) {
             // Doesn't exist in the hashtable, so silent return.
             return;
         } else {
@@ -47,7 +47,7 @@ public class TradeActivity extends AppCompatActivity {
         // Reduces OWN inventory by one, since you got confirmation that the ingredient sent.
         Ingredient cur_ig = ingredients.get(ing_name);
         if (cur_ig != null) {
-            cur_ig.useIngredient();
+//            cur_ig.useIngredient();
 
 //            if (cur_ig.getQuantity() < 1) {
 //                // This is an error. It should never be less than 0.

@@ -17,20 +17,20 @@ public class Inventory {
 //        ingredients_.put(carrot.getName(), carrot);
     }
 
-    public boolean haveIngredient(String name) {
-        Ingredient i = ingredients_.get(name);
-        return i.haveIngredient();
-    }
-
-	public void receiveIngredient(String name) {
-        Ingredient i = ingredients_.get(name);
-        i.getIngredient();
-    }
-
-    public boolean useIngredient(String name) {
-        Ingredient i = ingredients_.get(name);
-        return i.useIngredient();
-    }
+//    public boolean haveIngredient(String name) {
+//        Ingredient i = ingredients_.get(name);
+//        return i.haveIngredient();
+//    }
+//
+//	public void receiveIngredient(String name) {
+//        Ingredient i = ingredients_.get(name);
+//        i.getIngredient();
+//    }
+//
+//    public boolean useIngredient(String name) {
+//        Ingredient i = ingredients_.get(name);
+//        return i.useIngredient();
+//    }
 
 	private Hashtable<String, Ingredient> ingredients_ = new Hashtable<String, Ingredient>();
 }

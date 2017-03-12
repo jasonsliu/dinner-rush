@@ -10,9 +10,9 @@ import android.view.ViewGroup;
  * Created by jason on 3/11/2017.
  */
 
-public class InventoryFragment extends Fragment {
+public class P1InventoryFragment extends Fragment {
 
-    public InventoryFragment() {}
+    public P1InventoryFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -23,8 +23,6 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
 
     protected Context mContext;
     private String mName;
-    private boolean m_isMine;
-    private boolean m_haveIt;
     private int mHealth;
     private int mPointValue;
     protected int mRawDrawable;
@@ -40,7 +38,7 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
     }
 
     public Ingredient(Context context, String name,
-                      int health, int pointValue, boolean mine,
+                      int health, int pointValue,
                       int rawHeight, int rawWidth,
                       int rawImage, int processedImage,
                       ImageView placeholder, IngredientListener listener) {
@@ -58,16 +56,9 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
         mName = name;
         mHealth = health;
         mPointValue = pointValue;
-        m_isMine = mine;
-        m_haveIt = m_isMine;
         mRawDrawable = rawImage;
         mProcessedDrawable = processedImage;
         mListener = listener;
-    }
-
-    public void setLocation(float x, float y) {
-        this.setX(x);
-        this.setY(y);
     }
 
     private void process() {
@@ -84,20 +75,6 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
 
     public String getName() { return mName; }
     public Integer getPointValue() { return mPointValue; }
-
-    public boolean useIngredient() {
-        if (m_isMine) return true;
-        if (m_haveIt) {
-            m_haveIt = false;
-            return true;
-        }
-
-        return false;
-    }
-
-    public boolean getIngredient() { return m_haveIt; }
-    public boolean haveIngredient() { return m_haveIt; }
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

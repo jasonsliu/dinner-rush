@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/inventory">
+    tools:context=".GameActivity"
+    android:background="@color/inventory"
+    android:clickable="true">
 
     <TextView
         android:id="@+id/recipe_head"
@@ -40,7 +41,8 @@
             android:layout_column="0"
             android:layout_row="1"
             android:text="@string/use"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:onClick="getIngredientButtonPress" />
 
         <Button
             android:id="@+id/sendCornButton"
@@ -65,7 +67,8 @@
             android:layout_column="1"
             android:layout_row="1"
             android:text="@string/use"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:onClick="getIngredientButtonPress" />
 
         <Button
             android:id="@+id/sendLettuceButton"
@@ -90,7 +93,8 @@
             android:layout_column="2"
             android:layout_row="1"
             android:text="@string/use"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:onClick="getIngredientButtonPress" />
 
         <Button
             android:id="@+id/sendTomatoButton"
@@ -109,7 +113,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/myIngredientGrid"
-        android:paddingTop="16dp">
+        android:paddingTop="16dp"
+        android:paddingBottom="20dp">
 
         <ImageView
             android:id="@+id/imageView8"
@@ -126,7 +131,8 @@
             android:layout_column="0"
             android:layout_row="1"
             android:text="@string/use"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:onClick="getIngredientButtonPress" />
 
         <ImageView
             android:id="@+id/imageView10"
@@ -143,7 +149,8 @@
             android:layout_column="1"
             android:layout_row="1"
             android:text="@string/use"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:onClick="getIngredientButtonPress" />
 
         <ImageView
             android:id="@+id/imageView9"
@@ -160,7 +167,8 @@
             android:layout_column="2"
             android:layout_row="1"
             android:text="@string/use"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:onClick="getIngredientButtonPress" />
 
     </GridLayout>
 

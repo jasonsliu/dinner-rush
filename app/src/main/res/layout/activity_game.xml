@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="@string/inventory" />
+            android:text="@string/inventory"
+            android:onClick="inventoryButtonPress" />
 
         <LinearLayout
             android:id="@+id/status_display"
@@ -146,6 +147,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/relativeLayout2"
         app:layout_constraintVertical_bias="0.68"
-        app:srcCompat="@mipmap/ic_launcher"/>
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <FrameLayout
+        android:id="@+id/inventory_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".GameActivity" />
 
 </android.support.constraint.ConstraintLayout>
