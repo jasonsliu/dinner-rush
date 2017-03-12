@@ -19,7 +19,11 @@ public class Corn extends Ingredient {
     public static final int PROCESSED_DRAWABLE = R.drawable.corn_chopped;
 
     public Corn(Context context) {
-        super(context, NAME, POINT_VALUE);
+        super(context, NAME,
+                HEALTH, POINT_VALUE,
+                RAW_HEIGHT, RAW_WIDTH,
+                RAW_DRAWABLE, PROCESSED_DRAWABLE, null, null);
+        this.setImageResource(mRawDrawable);
     }
 
     public Corn(Context context, ImageView view, IngredientListener listener) {

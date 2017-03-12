@@ -3,6 +3,7 @@ package com.example.jason.dinner_rush.Ingredients;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -25,40 +26,51 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
     private String mName;
     private int mHealth;
     private int mPointValue;
+    private int mRawHeight;
+    private int mRawWidth;
     protected int mRawDrawable;
     protected int mProcessedDrawable;
     private IngredientListener mListener;
     boolean mIsActive = true;
     private ValueAnimator mAnimator;
 
-    public Ingredient(Context context, String name, int pointValue) {
-        super(context);
-        mName = name;
-        mPointValue = pointValue;
-    }
-
     public Ingredient(Context context, String name,
                       int health, int pointValue,
                       int rawHeight, int rawWidth,
                       int rawImage, int processedImage,
-                      ImageView placeholder, IngredientListener listener) {
+                      @Nullable ImageView placeholder, @Nullable IngredientListener listener) {
         super(context);
-
-        // set up location for image display
-        int dpHeight = PixelHelper.pixelsToDp(rawHeight, context);
-        int dpWidth = PixelHelper.pixelsToDp(rawWidth, context);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dpWidth, dpHeight);
-        setLayoutParams(params);
-        this.setX(placeholder.getX() - (dpHeight / 2));
-        this.setY(placeholder.getY() - (dpWidth / 2));
 
         mContext = context;
         mName = name;
         mHealth = health;
+        mRawHeight = rawHeight;
+        mRawWidth = rawWidth;
         mPointValue = pointValue;
         mRawDrawable = rawImage;
         mProcessedDrawable = processedImage;
         mListener = listener;
+
+        if (placeholder != null) {
+            setLocation(placeholder);
+        }
+    }
+
+    public void setUpForUse(ImageView placeholder, IngredientListener listener) {
+        mListener = listener;
+        setLocation(placeholder);
+    }
+
+    // set up location for image display
+    private void setLocation(ImageView placeholder) {
+        if (placeholder != null) {
+            int dpHeight = PixelHelper.pixelsToDp(mRawHeight, mContext);
+            int dpWidth = PixelHelper.pixelsToDp(mRawWidth, mContext);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dpWidth, dpHeight);
+            setLayoutParams(params);
+            this.setX(placeholder.getX() - (dpHeight / 2));
+            this.setY(placeholder.getY() - (dpWidth / 2));
+        }
     }
 
     private void process() {

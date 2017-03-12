@@ -1,8 +1,10 @@
 package com.example.jason.dinner_rush;
 
+import android.content.Context;
+
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
 
-import java.util.Hashtable;
+import java.util.ArrayList;
 
 /**
  * Created by byronc on 2/16/17.
@@ -10,27 +12,39 @@ import java.util.Hashtable;
 
 public class Inventory {
 
-    public Inventory() {
-//        Ingredient potato = new Ingredient("potato", false, true);
-//        ingredients_.put(potato.getName(), potato);
-//        Ingredient carrot = new Ingredient("carrot", false, true);
-//        ingredients_.put(carrot.getName(), carrot);
+    private Context mContext;
+    protected ArrayList<Ingredient> mOwned = new ArrayList<>();
+    protected ArrayList<Ingredient> mForeign = new ArrayList<>();
+
+    private String mForeignName;
+
+    public Inventory(Context context) {
+        mContext = context;
     }
 
-//    public boolean haveIngredient(String name) {
-//        Ingredient i = ingredients_.get(name);
-//        return i.haveIngredient();
-//    }
-//
-//	public void receiveIngredient(String name) {
-//        Ingredient i = ingredients_.get(name);
-//        i.getIngredient();
-//    }
-//
-//    public boolean useIngredient(String name) {
-//        Ingredient i = ingredients_.get(name);
-//        return i.useIngredient();
-//    }
+    public Ingredient getIngredient(Ingredient ing) {
+        if (ing != null) {
+            if (ing.getName().equals(mForeignName)) {
+                mForeignName = null; // use the ingredient
+                return ing;
+            }
 
-	private Hashtable<String, Ingredient> ingredients_ = new Hashtable<String, Ingredient>();
+            for (int k = 0; k < mOwned.size(); k++) {
+                if (ing.getName().equals(mOwned.get(k).getName())) {
+                    return ing;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean setForeignIngredient(String name) {
+        for (int k = 0; k < mForeign.size(); k++) {
+            if (mForeign.get(k).getName().equals(name)) {
+                mForeignName = name;
+                return true;
+            }
+        }
+        return false;
+    }
 }
