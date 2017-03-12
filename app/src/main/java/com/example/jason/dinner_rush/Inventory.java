@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.jason.dinner_rush.Ingredients.Carrot;
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -15,8 +16,8 @@ import java.util.List;
 public class Inventory {
 
     private Context mContext;
-    private List<Ingredient> mOwned;
-    private List<Ingredient> mForeign;
+    private ArrayList<Ingredient> mOwned = new ArrayList<>();
+    private ArrayList<Ingredient> mForeign = new ArrayList<>();
 
     private String mForeignName;
 
@@ -38,8 +39,8 @@ public class Inventory {
         }
 
         for (int k = 0; k < mOwned.size(); k++) {
-            if (ing.getName() = mOwned[k].getName()) {
-                return mOwned[k];
+            if (ing.getName() == mOwned.get(k).getName()) {
+                return mOwned.get(k);
             }
         }
 
@@ -48,7 +49,7 @@ public class Inventory {
 
     public boolean setForeignIngredient(String name) {
         for (int k = 0; k < mForeign.size(); k++) {
-            if (mForeign[k].getName() == name) {
+            if (mForeign.get(k).getName() == name) {
                 mForeignName = name;
                 return true;
             }
