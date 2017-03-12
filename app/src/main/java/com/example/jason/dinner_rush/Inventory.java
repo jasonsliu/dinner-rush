@@ -1,8 +1,12 @@
 package com.example.jason.dinner_rush;
 
+import android.content.Context;
+
+import com.example.jason.dinner_rush.Ingredients.Carrot;
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
 
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Created by byronc on 2/16/17.
@@ -10,12 +14,49 @@ import java.util.Hashtable;
 
 public class Inventory {
 
-    public Inventory() {
+    private Context mContext;
+    private List<Ingredient> mOwned;
+    private List<Ingredient> mForeign;
+
+    private String mForeignName;
+
+    public Inventory(Context context, List<Ingredient> i1, List<Ingredient> i2) {
+        mOwned.addAll(i1);
+        mForeign.addAll(i2);
+        mForeignName = null;
+        mContext = context;
+
 //        Ingredient potato = new Ingredient("potato", false, true);
 //        ingredients_.put(potato.getName(), potato);
 //        Ingredient carrot = new Ingredient("carrot", false, true);
 //        ingredients_.put(carrot.getName(), carrot);
     }
+
+    public Ingredient getIngredient(Ingredient ing) {
+        if (ing.getName() == mForeignName) {
+            return ing;
+        }
+
+        for (int k = 0; k < mOwned.size(); k++) {
+            if (ing.getName() = mOwned[k].getName()) {
+                return mOwned[k];
+            }
+        }
+
+        return null;
+    }
+
+    public boolean setForeignIngredient(String name) {
+        for (int k = 0; k < mForeign.size(); k++) {
+            if (mForeign[k].getName() == name) {
+                mForeignName = name;
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
 //    public boolean haveIngredient(String name) {
 //        Ingredient i = ingredients_.get(name);
