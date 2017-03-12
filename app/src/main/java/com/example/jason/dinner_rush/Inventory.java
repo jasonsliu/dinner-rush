@@ -34,12 +34,12 @@ public class Inventory {
     }
 
     public Ingredient getIngredient(Ingredient ing) {
-        if (ing.getName() == mForeignName) {
+        if (ing.getName().equals(mForeignName)) {
             return ing;
         }
 
         for (int k = 0; k < mOwned.size(); k++) {
-            if (ing.getName() == mOwned.get(k).getName()) {
+            if (ing.getName().equals(mOwned.get(k).getName())) {
                 return mOwned.get(k);
             }
         }
@@ -49,7 +49,7 @@ public class Inventory {
 
     public boolean setForeignIngredient(String name) {
         for (int k = 0; k < mForeign.size(); k++) {
-            if (mForeign.get(k).getName() == name) {
+            if (mForeign.get(k).getName().equals(name)) {
                 mForeignName = name;
                 return true;
             }
