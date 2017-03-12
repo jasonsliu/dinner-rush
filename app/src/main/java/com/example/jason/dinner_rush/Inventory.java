@@ -22,13 +22,7 @@ public class Inventory {
     private String mForeignName;
 
     public Inventory(Context context) {
-        mForeignName = null;
         mContext = context;
-
-//        Ingredient potato = new Ingredient("potato", false, true);
-//        ingredients_.put(potato.getName(), potato);
-//        Ingredient carrot = new Ingredient("carrot", false, true);
-//        ingredients_.put(carrot.getName(), carrot);
     }
 
     public Ingredient getIngredient(Ingredient ing) {
@@ -38,6 +32,7 @@ public class Inventory {
 
 
         if (ing.getName().equals(mForeignName)) {
+            mForeignName = null;
             return ing;
         }
 

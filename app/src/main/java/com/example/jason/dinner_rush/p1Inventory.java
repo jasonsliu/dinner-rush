@@ -20,23 +20,16 @@ public class p1Inventory extends Inventory {
     public p1Inventory(Context context) {
         super(context);
 
-        ArrayList<Ingredient> a = new ArrayList<>();
-        Ingredient i = new Carrot(context);
-        a.add(i);
-        i = new Avocado(context);
-        a.add(i);
-        i = new Bacon(context);
-        a.add(i);
+        ArrayList<Ingredient> owned = new ArrayList<>();
+        owned.add(new Carrot(context));
+        owned.add(new Avocado(context));
+        owned.add(new Bacon(context));
+        mOwned = owned;
 
-        ArrayList<Ingredient> b = new ArrayList<>();
-        i = new Corn(context);
-        a.add(i);
-        i = new Lettuce(context);
-        a.add(i);
-        i = new Tomato(context);
-        a.add(i);
-
-        mOwned = a;
-        mForeign = b;
+        ArrayList<Ingredient> foreign = new ArrayList<>();
+        foreign.add(new Corn(context));
+        foreign.add(new Lettuce(context));
+        foreign.add(new Tomato(context));
+        mForeign = foreign;
     }
 }

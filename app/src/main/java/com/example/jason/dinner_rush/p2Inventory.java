@@ -20,23 +20,16 @@ public class p2Inventory extends Inventory {
     public p2Inventory(Context context) {
         super(context);
 
-        ArrayList<Ingredient> a = new ArrayList<>();
-        Ingredient i = new Carrot(context);
-        a.add(i);
-        i = new Avocado(context);
-        a.add(i);
-        i = new Bacon(context);
-        a.add(i);
+        ArrayList<Ingredient> foreign = new ArrayList<>();
+        foreign.add(new Carrot(context));
+        foreign.add(new Avocado(context));
+        foreign.add(new Bacon(context));
+        mOwned = foreign;
 
-        ArrayList<Ingredient> b = new ArrayList<>();
-        i = new Corn(context);
-        b.add(i);
-        i = new Lettuce(context);
-        b.add(i);
-        i = new Tomato(context);
-        b.add(i);
-
-        mOwned = b;
-        mForeign = a;
+        ArrayList<Ingredient> owned = new ArrayList<>();
+        owned.add(new Corn(context));
+        owned.add(new Lettuce(context));
+        owned.add(new Tomato(context));
+        mForeign = owned;
     }
 }
