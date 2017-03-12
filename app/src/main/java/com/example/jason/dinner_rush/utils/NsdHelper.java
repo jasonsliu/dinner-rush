@@ -1,4 +1,4 @@
-package com.example.jason.dinner_rush;
+package com.example.jason.dinner_rush.utils;
 
 import android.content.Context;
 import android.net.nsd.NsdManager;

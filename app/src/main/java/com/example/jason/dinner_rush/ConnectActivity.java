@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.jason.dinner_rush.utils.NsdHelper;
+
 public class ConnectActivity extends AppCompatActivity {
 
     NsdHelper mNsdHelper;
