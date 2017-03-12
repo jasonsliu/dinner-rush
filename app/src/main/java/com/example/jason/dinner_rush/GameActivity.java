@@ -39,6 +39,7 @@ public class GameActivity extends AppCompatActivity {
     private Ingredient mCurrIngredient;
     private Order mCurrOrder;
     private int mScore = 0;
+    private Inventory mInventory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +105,6 @@ public class GameActivity extends AppCompatActivity {
                         putIngredient(new Bacon(GameActivity.this, INGREDIENT_PLACEHOLDER, mIngredientListener));
                         break;
                 }
-
             }
         };
 
@@ -189,9 +189,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void getIngredientButtonPress(View view) {
+        Ingredient getThis;
         switch(view.getId()) {
             case R.id.getCarrotButton:
-                Log.d(TAG, "acrrr");
+                getThis = new Carrot(GameActivity.this);
                 break;
             case R.id.getAvocadoButton:
                 break;
@@ -203,6 +204,25 @@ public class GameActivity extends AppCompatActivity {
             case R.id.getLettuceButton:
                 break;
             case R.id.getTomatoButton:
+                break;
+        }
+    }
+
+    public void sendIngredientButtonPress(View view) {
+        switch(view.getId()) {
+            case R.id.sendCarrotButton:
+                // inventory.getIngredient(INGREDIENT.CLASS)
+                break;
+            case R.id.sendAvocadoButton:
+                break;
+            case R.id.sendBaconButton:
+                Log.d(TAG, "bancn");
+                break;
+            case R.id.sendCornButton:
+                break;
+            case R.id.sendLettuceButton:
+                break;
+            case R.id.sendTomatoButton:
                 break;
         }
     }

@@ -19,7 +19,10 @@ public class Tomato extends Ingredient {
     public static final int PROCESSED_DRAWABLE = R.drawable.tomato_chopped;
 
     public Tomato(Context context) {
-        super(context, NAME, POINT_VALUE);
+        super(context, NAME,
+                HEALTH, POINT_VALUE,
+                RAW_HEIGHT, RAW_WIDTH,
+                RAW_DRAWABLE, PROCESSED_DRAWABLE, null, null);
     }
 
     public Tomato(Context context, ImageView view, IngredientListener listener) {
