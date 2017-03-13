@@ -71,7 +71,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 String chatLine = msg.getData().getString("msg");
-                Log.d(TAG, "Received " + chatLine + " from friend!");
+                Log.e(TAG, "Received " + chatLine + " from friend!");
                 if (chatLine.equals(START_MSG)) {
                     startGame();
                 } else {
