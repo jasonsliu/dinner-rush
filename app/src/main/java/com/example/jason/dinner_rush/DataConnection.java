@@ -70,7 +70,9 @@ public class DataConnection {
     }
 
     public synchronized void updateMessages(String msg, boolean local) {
-        Log.e(TAG, "Updating message: " + msg);
+        if (local) {
+            return;
+        }
 
         Bundle messageBundle = new Bundle();
         messageBundle.putString("msg", msg);
