@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:gravity="end"
-                android:text="@string/max_number"
+                android:text="@string/time_null"
                 android:textSize="@dimen/status_text_size"
                 android:textStyle="bold" />
         </LinearLayout>

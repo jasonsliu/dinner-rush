@@ -67,19 +67,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        mUpdateHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                String chatLine = msg.getData().getString("msg");
-                Log.e(TAG, "Received " + chatLine + " from friend!");
-                if (chatLine.equals(START_MSG)) {
-                    startGame();
-                } else {
-                    mInventory.setForeignIngredient(chatLine);
-                }
-            }
-        };
-
         LoadViews();
         InitListeners();
     }
@@ -121,6 +108,28 @@ public class GameActivity extends AppCompatActivity {
                         startGame();
                     }
                 });
+            }
+        };
+
+        mUpdateHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                String chatLine = msg.getData().getString("msg");
+                Log.e(TAG, "Received " + chatLine + " from friend!");
+                if (chatLine.equals(START_MSG)) {
+                    startGame();
+                } else {
+                    if (!mInventory.setForeignIngredient(chatLine)) {
+                        // not an ingredient name, must be score
+                        try {
+                            mScore += Integer.parseInt(chatLine);
+                            scoreDisplay.setText(String.valueOf(mScore));
+                        } catch (NumberFormatException e){
+                            Log.e(TAG, "Received unknown message: " + chatLine);
+                        }
+
+                    }
+                }
             }
         };
     }
@@ -193,6 +202,7 @@ public class GameActivity extends AppCompatActivity {
     private void updateScore(int numPointsToAdd) {
         mScore += numPointsToAdd;
         scoreDisplay.setText(String.valueOf(mScore));
+        mConnection.sendMessage(String.valueOf(numPointsToAdd));
     }
 
     public void inventoryButtonPress(View view) {

@@ -11,4 +11,5 @@
     <string name="order">Order Recipe:</string>
     <string name="use">USE</string>
     <string name="send">SEND</string>
+    <string name="time_null">--</string>
 </resources>
