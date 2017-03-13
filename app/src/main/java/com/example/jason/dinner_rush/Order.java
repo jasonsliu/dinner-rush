@@ -15,9 +15,9 @@ import java.util.Random;
  * Created by jason on 3/8/2017.
  */
 
-public class Order {
-    public static final int MAX_ING_PER_ORDER = 6;
-    public static final int MIN_ING_PER_ORDER = 3;
+class Order {
+    private static final int MAX_ING_PER_ORDER = 6;
+    private static final int MIN_ING_PER_ORDER = 3;
 
     private final TextView mOrderText;
     private final OrderListener mListener;
@@ -28,7 +28,7 @@ public class Order {
     private int mOrderPointValue = 0;
 
 
-    public Order(Context context, TextView orderText, OrderListener listener) {
+    Order(Context context, TextView orderText, OrderListener listener) {
         Random random = new Random();
         mOrderText = orderText;
         mListener = listener;
@@ -52,7 +52,7 @@ public class Order {
         mOrderText.startAnimation(animFadeIn);
     }
 
-    public void addIngredient(Ingredient ing) {
+    void addIngredient(Ingredient ing) {
         int index = orderList.indexOf(ing.getName());
         if(index < 0) {
             // Start over since added wrong ingredient
@@ -79,7 +79,7 @@ public class Order {
         mOrderText.setText(order);
     }
 
-    public interface OrderListener {
+    interface OrderListener {
         void finishedOrder(int pointsEarned);
         void botchedOrder(int pointPenalty);
     }
