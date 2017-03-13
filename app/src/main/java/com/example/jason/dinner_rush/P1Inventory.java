@@ -16,8 +16,8 @@ import java.util.ArrayList;
  * Created by byronc on 3/12/17.
  */
 
-public class p2Inventory extends Inventory {
-    public p2Inventory(Context context) {
+public class P1Inventory extends Inventory {
+    public P1Inventory(Context context) {
         super(context);
 
         ArrayList<Ingredient> owned = new ArrayList<>();

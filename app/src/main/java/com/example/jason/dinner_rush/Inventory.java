@@ -38,13 +38,11 @@ public class Inventory {
         return null;
     }
 
-    public boolean setForeignIngredient(String name) {
+    public void setForeignIngredient(String name) {
         for (int k = 0; k < mForeign.size(); k++) {
             if (mForeign.get(k).getName().equals(name)) {
                 mForeignName = name;
-                return true;
             }
         }
-        return false;
     }
 }

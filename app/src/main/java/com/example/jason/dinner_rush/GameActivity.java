@@ -1,7 +1,11 @@
 package com.example.jason.dinner_rush;
 
+import android.app.Fragment;
+import android.net.nsd.NsdServiceInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,11 +20,13 @@ import com.example.jason.dinner_rush.Ingredients.Corn;
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
 import com.example.jason.dinner_rush.Ingredients.Lettuce;
 import com.example.jason.dinner_rush.Ingredients.Tomato;
+import com.example.jason.dinner_rush.utils.NsdHelper;
 
 public class GameActivity extends AppCompatActivity {
 
     public static final long SECONDS_PER_GAME = 60;
     public static final String TAG = "GameActivity";
+    public static final String START_MSG = "start";
 
     private ViewGroup mContentView;
     CountDownTimer mTimer;
@@ -28,14 +34,22 @@ public class GameActivity extends AppCompatActivity {
     TextView scoreDisplay;
     ImageView INGREDIENT_PLACEHOLDER;
     TextView mOrderTextView;
-    P1InventoryFragment mFrag = new P1InventoryFragment();
+    Fragment mFrag;
 
     Ingredient.IngredientListener mIngredientListener;
     Order.OrderListener mOrderListener;
+    DataConnection.ConnectionListener mConnectionListener;
+    private static Handler mUpdateHandler;
+    private Handler mAutoConnectHandler = new Handler();
+
+    DataConnection mConnection;
+    NsdHelper mNsdHelper;
 
     private Ingredient mCurrIngredient;
     private Order mCurrOrder;
     private int mScore = 0;
+    private boolean isPlayer1;
+    private boolean gameRunning;
     private Inventory mInventory;
 
     @Override
@@ -53,9 +67,21 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        mUpdateHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                String chatLine = msg.getData().getString("msg");
+                Log.d(TAG, "Received " + chatLine + " from friend!");
+                if (chatLine.equals(START_MSG)) {
+                    startGame();
+                } else {
+                    mInventory.setForeignIngredient(chatLine);
+                }
+            }
+        };
+
         LoadViews();
         InitListeners();
-        startGame();
     }
 
     private void InitListeners() {
@@ -80,11 +106,29 @@ public class GameActivity extends AppCompatActivity {
                 updateScore(-pointPenalty);
             }
         };
+
+        mConnectionListener = new DataConnection.ConnectionListener() {
+            @Override
+            public void stopAutoDiscovery() {
+                Log.d(TAG, "Stopping auto-discovery.");
+                mAutoConnectHandler.removeCallbacksAndMessages(null);
+                Log.e(TAG, "I am player 2 !");
+                isPlayer1 = false;
+                mConnection.sendMessage("start"); // tell the other player to start
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        startGame();
+                    }
+                });
+            }
+        };
     }
 
     private void LoadViews() {
         timeDisplay = (TextView) findViewById(R.id.time_display);
         scoreDisplay = (TextView) findViewById(R.id.score_display);
+        scoreDisplay.setText("0");
         mTimer = new CountDownTimer(SECONDS_PER_GAME*1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -104,26 +148,37 @@ public class GameActivity extends AppCompatActivity {
     private void putIngredient(Ingredient ing) {
         if (mCurrIngredient != null) {
             // replace old ingredient
-            Log.d(TAG, "Replacing old ingredient!");
             mContentView.removeView(mCurrIngredient);
             mCurrIngredient.setInactive();
         }
 
         mCurrIngredient = ing;
         if (ing != null) {
+            ing.setUpForUse(INGREDIENT_PLACEHOLDER, mIngredientListener);
             mContentView.addView(ing);
         }
     }
 
     private void startGame() {
-        mTimer.start();
-        mInventory = new p1Inventory(GameActivity.this); // TODO: 3/12/2017 Choose appropriate inventory based on player 
-        mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
-        scoreDisplay.setText("0");
+        if (!gameRunning) {
+            Log.e(TAG, "STARTING GAME");
+            mTimer.start();
+            if (isPlayer1) {
+                mInventory = new P1Inventory(GameActivity.this);
+                mFrag = new P1InventoryFragment();
+            } else {
+                mInventory = new P2Inventory(GameActivity.this);
+                mFrag = new P2InventoryFragment();
+            }
+            mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
+            scoreDisplay.setText("0");
+            gameRunning = true;
+        }
     }
 
     private void gameOver() {
         // TODO: 3/8/2017 Implement this.
+        gameRunning = false;
     }
 
     private void setToFullScreen() {
@@ -161,19 +216,19 @@ public class GameActivity extends AppCompatActivity {
                 getThis = new Carrot(GameActivity.this);
                 break;
             case R.id.getAvocadoButton:
-                getThis = new Avocado(GameActivity.this);
+                getThis = new Avocado(this);
                 break;
             case R.id.getBaconButton:
-                getThis = new Bacon(GameActivity.this);
+                getThis = new Bacon(this);
                 break;
             case R.id.getCornButton:
-                getThis = new Corn(GameActivity.this);
+                getThis = new Corn(this);
                 break;
             case R.id.getLettuceButton:
-                getThis = new Lettuce(GameActivity.this);
+                getThis = new Lettuce(this);
                 break;
             case R.id.getTomatoButton:
-                getThis = new Tomato(GameActivity.this);
+                getThis = new Tomato(this);
                 break;
         }
 
@@ -186,34 +241,110 @@ public class GameActivity extends AppCompatActivity {
         Ingredient received = mInventory.getIngredient(getThis);
         if (received != null) {
             Log.d(TAG, "Got a " + received.getName());
-            received.setUpForUse(INGREDIENT_PLACEHOLDER, mIngredientListener);
             putIngredient(received);
             inventoryButtonPress(null);
         }
     }
 
     public void sendIngredientButtonPress(View view) {
+        Ingredient ing = null;
         switch(view.getId()) {
             case R.id.sendCarrotButton:
-                // inventory.getIngredient(INGREDIENT.CLASS)
+                ing = new Carrot(this);
                 break;
             case R.id.sendAvocadoButton:
+                ing = new Avocado(this);
                 break;
             case R.id.sendBaconButton:
-                Log.d(TAG, "bancn");
+                ing = new Bacon(this);
                 break;
             case R.id.sendCornButton:
+                ing = new Corn(this);
                 break;
             case R.id.sendLettuceButton:
+                ing = new Lettuce(this);
                 break;
             case R.id.sendTomatoButton:
+                ing = new Tomato(this);
                 break;
         }
+        if (ing != null) {
+            mConnection.sendMessage(ing.getName());
+            inventoryButtonPress(null);
+        }
+    }
+
+    private void autoConnect() {
+        // Register service
+        if(mConnection.getLocalPort() > -1) {
+            mNsdHelper.registerService(mConnection.getLocalPort());
+        } else {
+            Log.d(TAG, "ServerSocket isn't bound.");
+        }
+
+        mAutoConnectHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                NsdServiceInfo service = mNsdHelper.getChosenServiceInfo();
+                if(service == null) {
+                    mNsdHelper.discoverServices();
+                    mAutoConnectHandler.postDelayed(this, 3000);
+                } else {
+                    Log.d(TAG, "Connecting.");
+                    mConnection.connectToServer(service.getHost(),
+                            service.getPort());
+                    isPlayer1 = true;
+                    Log.e(TAG, "I am player 1 !");
+                }
+            }
+        }, 1);
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d(TAG, "Starting.");
+        mConnection = new DataConnection(mUpdateHandler, mConnectionListener);
+
+        mNsdHelper = new NsdHelper(this);
+        mNsdHelper.initializeNsd();
+
+        super.onStart();
     }
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "Resuming.");
         super.onResume();
         setToFullScreen();
+        if (mNsdHelper != null) {
+            mNsdHelper.discoverServices();
+        }
+        autoConnect();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "Pausing.");
+        mAutoConnectHandler.removeCallbacksAndMessages(null);
+        if (mNsdHelper != null) {
+            mNsdHelper.stopDiscovery();
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d(TAG, "Being stopped.");
+        mNsdHelper.tearDown();
+        mConnection.tearDown();
+        mNsdHelper = null;
+        mConnection = null;
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "Being destroyed.");
+        super.onDestroy();
     }
 }

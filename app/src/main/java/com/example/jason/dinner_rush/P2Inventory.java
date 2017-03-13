@@ -16,20 +16,20 @@ import java.util.ArrayList;
  * Created by byronc on 3/12/17.
  */
 
-public class p1Inventory extends Inventory {
-    public p1Inventory(Context context) {
+public class P2Inventory extends Inventory {
+    public P2Inventory(Context context) {
         super(context);
 
-        ArrayList<Ingredient> owned = new ArrayList<>();
-        owned.add(new Carrot(context));
-        owned.add(new Avocado(context));
-        owned.add(new Bacon(context));
-        mOwned = owned;
-
         ArrayList<Ingredient> foreign = new ArrayList<>();
-        foreign.add(new Corn(context));
-        foreign.add(new Lettuce(context));
-        foreign.add(new Tomato(context));
+        foreign.add(new Carrot(context));
+        foreign.add(new Avocado(context));
+        foreign.add(new Bacon(context));
         mForeign = foreign;
+
+        ArrayList<Ingredient> owned = new ArrayList<>();
+        owned.add(new Corn(context));
+        owned.add(new Lettuce(context));
+        owned.add(new Tomato(context));
+        mOwned = owned;
     }
 }
