@@ -27,6 +27,7 @@ import com.example.jason.dinner_rush.inventory.P1InventoryFragment;
 import com.example.jason.dinner_rush.inventory.P2Inventory;
 import com.example.jason.dinner_rush.inventory.P2InventoryFragment;
 import com.example.jason.dinner_rush.utils.NsdHelper;
+import com.example.jason.dinner_rush.utils.SoundHelper;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -51,6 +52,7 @@ public class GameActivity extends AppCompatActivity {
 
     DataConnection mConnection;
     NsdHelper mNsdHelper;
+    SoundHelper mSoundHelper = new SoundHelper();
 
     private Ingredient mCurrIngredient;
     private Order mCurrOrder;
@@ -74,6 +76,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        mSoundHelper.preparePlayer(this);
         LoadViews();
         InitListeners();
     }
@@ -186,6 +189,10 @@ public class GameActivity extends AppCompatActivity {
             return;
         }
 
+        if (isPlayer1) {
+            mSoundHelper.playMusic();
+        }
+
         CountDownTimer t = new CountDownTimer(numTicks*1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -230,6 +237,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void endGame() {
         Log.e(TAG, "Game ended!");
+        gameRunning = false;
         if (mFrag.isVisible()) {
             getFragmentManager().beginTransaction()
                     .remove(mFrag)
@@ -237,9 +245,9 @@ public class GameActivity extends AppCompatActivity {
         }
         orderTextView.setText("");
         putIngredient(null);
+        mSoundHelper.pauseMusic();
         Toast toast = Toast.makeText(getApplicationContext(), "Game over! Score: " + mScore, Toast.LENGTH_LONG);
         toast.show();
-        gameRunning = false;
     }
 
     private void setToFullScreen() {
@@ -394,6 +402,7 @@ public class GameActivity extends AppCompatActivity {
         if (mNsdHelper != null) {
             mNsdHelper.stopDiscovery();
         }
+        mSoundHelper.pauseMusic();
         super.onPause();
     }
 
