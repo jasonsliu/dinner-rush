@@ -39,7 +39,6 @@ public class GameActivity extends AppCompatActivity {
     public static final String START_MSG = "start";
 
     private ViewGroup mContentView;
-    private MediaPlayer mDingPlayer;
     CountDownTimer mTimer;
     TextView timeDisplay;
     TextView scoreDisplay;
@@ -56,6 +55,7 @@ public class GameActivity extends AppCompatActivity {
     DataConnection mConnection;
     NsdHelper mNsdHelper;
     SoundHelper mSoundHelper = new SoundHelper();
+    private MediaPlayer mDingPlayer;
 
     private Ingredient mCurrIngredient;
     private Order mCurrOrder;
@@ -70,7 +70,6 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         mContentView = (ViewGroup) findViewById(R.id.activity_game);
-        mDingPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ding);
 
         // Return to fullscreen with tap
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +80,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         mSoundHelper.preparePlayer(this);
+        mDingPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ding);
         LoadViews();
         InitListeners();
     }

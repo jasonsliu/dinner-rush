@@ -27,12 +27,13 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
     private int mPointValue;
     private int mRawHeight;
     private int mRawWidth;
-    private MediaPlayer mChopMediaPlayer;
     protected int mRawDrawable;
     protected int mProcessedDrawable;
     private IngredientListener mListener;
+
     boolean mIsActive = true;
     private ValueAnimator mAnimator;
+    private MediaPlayer mChopMediaPlayer;
 
     public Ingredient(Context context, String name,
                       int health, int pointValue,
@@ -46,11 +47,12 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
         mHealth = health;
         mRawHeight = rawHeight;
         mRawWidth = rawWidth;
-        mChopMediaPlayer = MediaPlayer.create(mContext, R.raw.knife_chop);
         mPointValue = pointValue;
         mRawDrawable = rawImage;
         mProcessedDrawable = processedImage;
         mListener = listener;
+
+        mChopMediaPlayer = MediaPlayer.create(mContext, R.raw.knife_chop);
 
         if (placeholder != null) {
             setLocation(placeholder);
@@ -79,10 +81,8 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
         if (mHealth > 0) {
             this.setImageResource(mRawDrawable);
         } else {
-            // Plays the chop sound
-            mChopMediaPlayer.start();
-            // Displays finished ingredient
-            this.setImageResource(mProcessedDrawable);
+            mChopMediaPlayer.start(); // Plays the chop sound
+            this.setImageResource(mProcessedDrawable); // Switch to chopped ingredient
         }
         if (mHealth <= -1) {
             mListener.isFinished(this);
