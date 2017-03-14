@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jason.dinner_rush.Ingredients.Avocado;
 import com.example.jason.dinner_rush.Ingredients.Bacon;
@@ -111,7 +112,7 @@ public class GameActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        startGame();
+                        countDown();
                     }
                 });
             }
@@ -127,7 +128,7 @@ public class GameActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            startGame();
+                            countDown();
                         }
                     });
                 } else if (!mInventory.setForeignIngredient(chatLine)) {
@@ -161,6 +162,7 @@ public class GameActivity extends AppCompatActivity {
         };
         INGREDIENT_PLACEHOLDER = (ImageView) findViewById(R.id.ingredient_placeholder);
         orderTextView = (TextView) findViewById(R.id.order);
+        orderTextView.setText("Connecting...");
     }
 
     private void putIngredient(Ingredient ing) {
@@ -177,9 +179,41 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void countDown() {
+        final int numTicks = 4;
+
+        if (gameRunning) {
+            return;
+        }
+
+        CountDownTimer t = new CountDownTimer(numTicks*1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                switch ((int)millisUntilFinished / 1000) {
+                    case 3:
+                        orderTextView.setText("Ready...");
+                        break;
+                    case 2:
+                        orderTextView.setText("Set...");
+                        break;
+                    case 1:
+                        orderTextView.setText("Go!");
+                        break;
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                startGame();
+            }
+        };
+        t.start();
+    }
+
     private void startGame() {
         if (!gameRunning) {
             Log.e(TAG, "STARTING GAME");
+
             mTimer.start();
             if (isPlayer1) {
                 mInventory = new P1Inventory(GameActivity.this);
@@ -203,6 +237,8 @@ public class GameActivity extends AppCompatActivity {
         }
         orderTextView.setText("");
         putIngredient(null);
+        Toast toast = Toast.makeText(getApplicationContext(), "Game over! Score: " + mScore, Toast.LENGTH_LONG);
+        toast.show();
         gameRunning = false;
     }
 
