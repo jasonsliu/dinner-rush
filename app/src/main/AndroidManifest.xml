@@ -21,18 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-        android:name=".ConnectActivity"
-        android:screenOrientation="portrait" />
-
-        <activity android:name=".PlayActivity" />
-
-        <activity android:name=".TradeActivity" />
-
         <activity
             android:name=".GameActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>

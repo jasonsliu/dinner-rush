@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -187,6 +188,11 @@ public class GameActivity extends AppCompatActivity {
 
     private void gameOver() {
         // TODO: 3/8/2017 Implement this.
+//        if (mFrag.isVisible()) {
+//            getFragmentManager().beginTransaction()
+//                    .remove(mFrag)
+//                    .commit();
+//        }
         gameRunning = false;
     }
 
@@ -202,10 +208,14 @@ public class GameActivity extends AppCompatActivity {
     private void updateScore(int numPointsToAdd) {
         mScore += numPointsToAdd;
         scoreDisplay.setText(String.valueOf(mScore));
-        mConnection.sendMessage(String.valueOf(numPointsToAdd));
+        mConnection.sendMessage(String.valueOf(numPointsToAdd)); // send score to other team
     }
 
     public void inventoryButtonPress(View view) {
+        // do nothing if game is not running
+        if (!gameRunning) return;
+
+        Long time = System.currentTimeMillis();
         if (!mFrag.isVisible()) {
             getFragmentManager().beginTransaction()
                     .add(R.id.inventory_container, mFrag)
@@ -216,6 +226,7 @@ public class GameActivity extends AppCompatActivity {
                     .remove(mFrag)
                     .commit();
         }
+        Log.e(TAG, "Time: " + String.valueOf(System.currentTimeMillis() - time));
     }
 
     public void getIngredientButtonPress(View view) {

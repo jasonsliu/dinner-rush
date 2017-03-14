@@ -8,40 +8,28 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.jason.dinner_rush.MainActivity">
+    tools:context="com.example.jason.dinner_rush.MainActivity"
+    android:background="@color/main_activity">
 
-    <TextView android:id="@+id/header"
+    <Button android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-
-    <Button android:id="@+id/connect"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:layout_margin="20dp"
-        android:layout_below="@+id/header"
         android:layout_centerInParent="true"
-        android:text="Connect"
-        android:onClick="connectButtonPress" />
+        android:text="@string/play_button"
+        android:onClick="playButtonPress"
+        android:textSize="60sp"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:textColor="@color/lightGrey"
+        android:textStyle="bold"/>
 
-    <Button android:id="@+id/play"
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:layout_below="@+id/connect"
-        android:layout_centerInParent="true"
-        android:layout_margin="20dp"
-        android:text="Play"
-        android:onClick="playButtonPress" />
-
-    <Button android:id="@+id/trading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:padding="20dp"
-        android:layout_below="@+id/play"
-        android:layout_centerInParent="true"
-        android:text="Trade"
-        android:onClick="tradeButtonPress" />
+        android:layout_below="@id/play_button"
+        android:layout_centerHorizontal="true"
+        android:text="@string/about_button"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:textColor="@color/lightGrey"
+        android:textSize="16sp"
+        android:onClick="aboutButtonPress" />
 </RelativeLayout>

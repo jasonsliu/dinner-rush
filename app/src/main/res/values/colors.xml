@@ -6,6 +6,8 @@
     <color name="order">#D7CCC8</color>
     <color name="inventory">#C5CAE9</color>
 
+    <color name="main_activity">#D32F2F</color>
+
     <color name="black_overlay">#66000000</color>
     <color name="lightGrey">#dddddd</color>
 </resources>
