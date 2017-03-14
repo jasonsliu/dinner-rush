@@ -16,7 +16,7 @@ import java.util.Random;
  */
 
 class Order {
-    private static final int MAX_ING_PER_ORDER = 6;
+    private static final int MAX_ING_PER_ORDER = 5;
     private static final int MIN_ING_PER_ORDER = 3;
 
     private final TextView mOrderText;

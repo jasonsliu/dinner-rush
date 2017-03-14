@@ -7,7 +7,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import com.example.jason.dinner_rush.utils.NsdHelper;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static final long SECONDS_PER_GAME = 60;
+    public static final long SECONDS_PER_GAME = 120;
     public static final String TAG = "GameActivity";
     public static final String START_MSG = "start";
 
@@ -188,11 +187,12 @@ public class GameActivity extends AppCompatActivity {
 
     private void gameOver() {
         // TODO: 3/8/2017 Implement this.
-//        if (mFrag.isVisible()) {
-//            getFragmentManager().beginTransaction()
-//                    .remove(mFrag)
-//                    .commit();
-//        }
+        if (mFrag.isVisible()) {
+            getFragmentManager().beginTransaction()
+                    .remove(mFrag)
+                    .commit();
+        }
+        putIngredient(null);
         gameRunning = false;
     }
 
