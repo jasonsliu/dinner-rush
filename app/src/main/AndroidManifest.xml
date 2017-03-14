@@ -8,7 +8,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/bacon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -24,7 +24,8 @@
         <activity
             android:name=".GameActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".AboutActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

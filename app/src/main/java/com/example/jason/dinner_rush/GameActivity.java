@@ -81,107 +81,6 @@ public class GameActivity extends AppCompatActivity {
         InitListeners();
     }
 
-    private void InitListeners() {
-        mIngredientListener = new Ingredient.IngredientListener() {
-            @Override
-            public void isFinished(Ingredient ingredient) {
-                mCurrOrder.addIngredient(ingredient);
-                updateScore(POINTS_PER_CUT);
-                putIngredient(null);
-            }
-        };
-
-        mOrderListener = new Order.OrderListener() {
-            @Override
-            public void finishedOrder(int pointsEarned) {
-                updateScore(pointsEarned);
-                mCurrOrder = new Order(GameActivity.this, orderTextView, mOrderListener);
-            }
-
-            @Override
-            public void botchedOrder(int pointPenalty) {
-                updateScore(-pointPenalty);
-            }
-        };
-
-        mConnectionListener = new DataConnection.ConnectionListener() {
-            @Override
-            public void stopAutoDiscovery() {
-                Log.d(TAG, "Stopping auto-discovery.");
-                mAutoConnectHandler.removeCallbacksAndMessages(null);
-                Log.e(TAG, "I am player 2 !");
-                isPlayer1 = false;
-                mConnection.sendMessage(START_MSG);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        countDown();
-                    }
-                });
-            }
-        };
-
-        mUpdateHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                String chatLine = msg.getData().getString("msg");
-                Log.e(TAG, "Received " + chatLine + " from friend!");
-
-                if (chatLine.equals(START_MSG)) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            countDown();
-                        }
-                    });
-                } else if (!mInventory.setForeignIngredient(chatLine)) {
-                    // not an ingredient name, must be score
-                    try {
-                        mScore += Integer.parseInt(chatLine);
-                        scoreDisplay.setText(String.valueOf(mScore));
-                    } catch (NumberFormatException e) {
-                        Log.e(TAG, "Received unknown message: " + chatLine);
-                    }
-                }
-            }
-        };
-    }
-
-    private void LoadViews() {
-        timeDisplay = (TextView) findViewById(R.id.time_display);
-        scoreDisplay = (TextView) findViewById(R.id.score_display);
-        scoreDisplay.setText("0");
-        mTimer = new CountDownTimer(SECONDS_PER_GAME*1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeDisplay.setText(String.valueOf(millisUntilFinished / 1000));
-            }
-
-            @Override
-            public void onFinish() {
-                timeDisplay.setText(String.valueOf(0));
-                endGame();
-            }
-        };
-        INGREDIENT_PLACEHOLDER = (ImageView) findViewById(R.id.ingredient_placeholder);
-        orderTextView = (TextView) findViewById(R.id.order);
-        orderTextView.setText("Connecting...");
-    }
-
-    private void putIngredient(Ingredient ing) {
-        if (mCurrIngredient != null) {
-            // replace old ingredient
-            mContentView.removeView(mCurrIngredient);
-            mCurrIngredient.setInactive();
-        }
-
-        mCurrIngredient = ing;
-        if (ing != null) {
-            ing.setUpForUse(INGREDIENT_PLACEHOLDER, mIngredientListener);
-            mContentView.addView(ing);
-        }
-    }
-
     private void countDown() {
         final int numTicks = 4;
 
@@ -250,13 +149,18 @@ public class GameActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void setToFullScreen() {
-        mContentView.setSystemUiVisibility((View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION));
+    private void putIngredient(Ingredient ing) {
+        if (mCurrIngredient != null) {
+            // replace old ingredient
+            mContentView.removeView(mCurrIngredient);
+            mCurrIngredient.setInactive();
+        }
+
+        mCurrIngredient = ing;
+        if (ing != null) {
+            ing.setUpForUse(INGREDIENT_PLACEHOLDER, mIngredientListener);
+            mContentView.addView(ing);
+        }
     }
 
     private void updateScore(int numPointsToAdd) {
@@ -371,6 +275,102 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         }, 1);
+    }
+
+    private void InitListeners() {
+        mIngredientListener = new Ingredient.IngredientListener() {
+            @Override
+            public void isFinished(Ingredient ingredient) {
+                mCurrOrder.addIngredient(ingredient);
+                updateScore(POINTS_PER_CUT);
+                putIngredient(null);
+            }
+        };
+
+        mOrderListener = new Order.OrderListener() {
+            @Override
+            public void finishedOrder(int pointsEarned) {
+                updateScore(pointsEarned);
+                mCurrOrder = new Order(GameActivity.this, orderTextView, mOrderListener);
+            }
+
+            @Override
+            public void botchedOrder(int pointPenalty) {
+                updateScore(-pointPenalty);
+            }
+        };
+
+        mConnectionListener = new DataConnection.ConnectionListener() {
+            @Override
+            public void stopAutoDiscovery() {
+                Log.d(TAG, "Stopping auto-discovery.");
+                mAutoConnectHandler.removeCallbacksAndMessages(null);
+                Log.e(TAG, "I am player 2 !");
+                isPlayer1 = false;
+                mConnection.sendMessage(START_MSG);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        countDown();
+                    }
+                });
+            }
+        };
+
+        mUpdateHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                String chatLine = msg.getData().getString("msg");
+                Log.e(TAG, "Received " + chatLine + " from friend!");
+
+                if (chatLine.equals(START_MSG)) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            countDown();
+                        }
+                    });
+                } else if (!mInventory.setForeignIngredient(chatLine)) {
+                    // not an ingredient name, must be score
+                    try {
+                        mScore += Integer.parseInt(chatLine);
+                        scoreDisplay.setText(String.valueOf(mScore));
+                    } catch (NumberFormatException e) {
+                        Log.e(TAG, "Received unknown message: " + chatLine);
+                    }
+                }
+            }
+        };
+    }
+
+    private void setToFullScreen() {
+        mContentView.setSystemUiVisibility((View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION));
+    }
+
+    private void LoadViews() {
+        timeDisplay = (TextView) findViewById(R.id.time_display);
+        scoreDisplay = (TextView) findViewById(R.id.score_display);
+        scoreDisplay.setText("0");
+        mTimer = new CountDownTimer(SECONDS_PER_GAME*1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeDisplay.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+
+            @Override
+            public void onFinish() {
+                timeDisplay.setText(String.valueOf(0));
+                endGame();
+            }
+        };
+        INGREDIENT_PLACEHOLDER = (ImageView) findViewById(R.id.ingredient_placeholder);
+        orderTextView = (TextView) findViewById(R.id.order);
+        orderTextView.setText("Connecting...");
     }
 
     @Override
