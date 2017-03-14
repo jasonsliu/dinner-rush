@@ -1,17 +1,16 @@
 package com.example.jason.dinner_rush.Ingredients;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import com.example.jason.dinner_rush.R;
 import com.example.jason.dinner_rush.utils.PixelHelper;
 
 /**
@@ -28,6 +27,7 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
     private int mPointValue;
     private int mRawHeight;
     private int mRawWidth;
+    private MediaPlayer mChopMediaPlayer;
     protected int mRawDrawable;
     protected int mProcessedDrawable;
     private IngredientListener mListener;
@@ -46,6 +46,7 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
         mHealth = health;
         mRawHeight = rawHeight;
         mRawWidth = rawWidth;
+        mChopMediaPlayer = MediaPlayer.create(mContext, R.raw.knife_chop);
         mPointValue = pointValue;
         mRawDrawable = rawImage;
         mProcessedDrawable = processedImage;
@@ -78,6 +79,9 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
         if (mHealth > 0) {
             this.setImageResource(mRawDrawable);
         } else {
+            // Plays the chop sound
+            mChopMediaPlayer.start();
+            // Displays finished ingredient
             this.setImageResource(mProcessedDrawable);
         }
         if (mHealth <= -1) {
