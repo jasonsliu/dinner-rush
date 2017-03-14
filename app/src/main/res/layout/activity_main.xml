@@ -11,6 +11,18 @@
     tools:context="com.example.jason.dinner_rush.MainActivity"
     android:background="@color/main_activity">
 
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-smallcaps"
+        android:paddingBottom="16dp"
+        android:paddingStart="24dp"
+        android:paddingTop="24dp"
+        android:text="TESTING - READY SET GO FEATURE"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <Button android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,4 +44,16 @@
         android:textColor="@color/lightGrey"
         android:textSize="16sp"
         android:onClick="aboutButtonPress" />
+
+    <Button android:id="@+id/trythis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Try connecting countdown"
+        android:onClick="connectCountdown"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@+id/play_button"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
