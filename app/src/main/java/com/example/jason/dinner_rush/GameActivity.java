@@ -1,6 +1,7 @@
 package com.example.jason.dinner_rush;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.nsd.NsdServiceInfo;
 import android.os.Bundle;
@@ -150,6 +151,35 @@ public class GameActivity extends AppCompatActivity {
         mSoundHelper.pauseMusic();
         Toast toast = Toast.makeText(getApplicationContext(), "Game over! Score: " + mScore, Toast.LENGTH_LONG);
         toast.show();
+        // Three seconds countdown
+        CountDownTimer waitCountdown = new CountDownTimer(3000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // Nothing on tick
+            }
+
+            @Override
+            public void onFinish() {
+                Intent i = new Intent(GameActivity.this,ScoreActivity.class);
+                Bundle extras = i.getExtras();
+                extras.putInt("score", mScore);
+                startActivity(i);
+                finish();
+            }
+        };
+        finish();
+    }
+
+    private void closeGame() {
+
+        // start a new intent
+        // put score in bundle
+        // create another screen
+        // in this new activity,
+        // query his server, send the score
+        // GLOBAL HIGH SCORE:
+        // YOUR SCORE: from the bundle
+        // Call finish on old activity
     }
 
     private void putIngredient(Ingredient ing) {
