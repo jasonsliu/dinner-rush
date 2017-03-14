@@ -12,7 +12,7 @@ import com.example.jason.dinner_rush.R;
 public class Lettuce extends Ingredient {
     public static final String NAME = "Lettuce";
     public static final int HEALTH = 3;
-    public static final int POINT_VALUE = 10;
+    public static final int POINT_VALUE = 6;
     public static final int RAW_HEIGHT = 100;
     public static final int RAW_WIDTH = 100;
     public static final int RAW_DRAWABLE = R.drawable.lettuce;

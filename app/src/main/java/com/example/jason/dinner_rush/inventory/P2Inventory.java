@@ -1,4 +1,4 @@
-package com.example.jason.dinner_rush;
+package com.example.jason.dinner_rush.inventory;
 
 import android.content.Context;
 

@@ -1,10 +1,12 @@
-package com.example.jason.dinner_rush;
+package com.example.jason.dinner_rush.inventory;
 
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.jason.dinner_rush.R;
 
 /**
  * Created by jason on 3/11/2017.

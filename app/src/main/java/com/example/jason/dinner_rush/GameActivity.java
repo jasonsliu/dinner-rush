@@ -20,11 +20,17 @@ import com.example.jason.dinner_rush.Ingredients.Corn;
 import com.example.jason.dinner_rush.Ingredients.Ingredient;
 import com.example.jason.dinner_rush.Ingredients.Lettuce;
 import com.example.jason.dinner_rush.Ingredients.Tomato;
+import com.example.jason.dinner_rush.inventory.Inventory;
+import com.example.jason.dinner_rush.inventory.P1Inventory;
+import com.example.jason.dinner_rush.inventory.P1InventoryFragment;
+import com.example.jason.dinner_rush.inventory.P2Inventory;
+import com.example.jason.dinner_rush.inventory.P2InventoryFragment;
 import com.example.jason.dinner_rush.utils.NsdHelper;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static final long SECONDS_PER_GAME = 120;
+    public static final int SECONDS_PER_GAME = 120;
+    public static final int POINTS_PER_CUT = 1;
     public static final String TAG = "GameActivity";
     public static final String START_MSG = "start";
 
@@ -33,7 +39,7 @@ public class GameActivity extends AppCompatActivity {
     TextView timeDisplay;
     TextView scoreDisplay;
     ImageView INGREDIENT_PLACEHOLDER;
-    TextView mOrderTextView;
+    TextView orderTextView;
     Fragment mFrag;
 
     Ingredient.IngredientListener mIngredientListener;
@@ -76,7 +82,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void isFinished(Ingredient ingredient) {
                 mCurrOrder.addIngredient(ingredient);
-
+                updateScore(POINTS_PER_CUT);
                 putIngredient(null);
             }
         };
@@ -85,7 +91,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void finishedOrder(int pointsEarned) {
                 updateScore(pointsEarned);
-                mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
+                mCurrOrder = new Order(GameActivity.this, orderTextView, mOrderListener);
             }
 
             @Override
@@ -101,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
                 mAutoConnectHandler.removeCallbacksAndMessages(null);
                 Log.e(TAG, "I am player 2 !");
                 isPlayer1 = false;
-                mConnection.sendMessage("start"); // tell the other player to start
+                mConnection.sendMessage(START_MSG);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -116,18 +122,21 @@ public class GameActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 String chatLine = msg.getData().getString("msg");
                 Log.e(TAG, "Received " + chatLine + " from friend!");
-                if (chatLine.equals(START_MSG)) {
-                    startGame();
-                } else {
-                    if (!mInventory.setForeignIngredient(chatLine)) {
-                        // not an ingredient name, must be score
-                        try {
-                            mScore += Integer.parseInt(chatLine);
-                            scoreDisplay.setText(String.valueOf(mScore));
-                        } catch (NumberFormatException e){
-                            Log.e(TAG, "Received unknown message: " + chatLine);
-                        }
 
+                if (chatLine.equals(START_MSG)) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            startGame();
+                        }
+                    });
+                } else if (!mInventory.setForeignIngredient(chatLine)) {
+                    // not an ingredient name, must be score
+                    try {
+                        mScore += Integer.parseInt(chatLine);
+                        scoreDisplay.setText(String.valueOf(mScore));
+                    } catch (NumberFormatException e) {
+                        Log.e(TAG, "Received unknown message: " + chatLine);
                     }
                 }
             }
@@ -147,11 +156,11 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timeDisplay.setText(String.valueOf(0));
-                gameOver();
+                endGame();
             }
         };
         INGREDIENT_PLACEHOLDER = (ImageView) findViewById(R.id.ingredient_placeholder);
-        mOrderTextView = (TextView) findViewById(R.id.order);
+        orderTextView = (TextView) findViewById(R.id.order);
     }
 
     private void putIngredient(Ingredient ing) {
@@ -179,19 +188,20 @@ public class GameActivity extends AppCompatActivity {
                 mInventory = new P2Inventory(GameActivity.this);
                 mFrag = new P2InventoryFragment();
             }
-            mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
+            mCurrOrder = new Order(GameActivity.this, orderTextView, mOrderListener);
             scoreDisplay.setText("0");
             gameRunning = true;
         }
     }
 
-    private void gameOver() {
-        // TODO: 3/8/2017 Implement this.
+    private void endGame() {
+        Log.e(TAG, "Game ended!");
         if (mFrag.isVisible()) {
             getFragmentManager().beginTransaction()
                     .remove(mFrag)
                     .commit();
         }
+        orderTextView.setText("");
         putIngredient(null);
         gameRunning = false;
     }
@@ -215,7 +225,6 @@ public class GameActivity extends AppCompatActivity {
         // do nothing if game is not running
         if (!gameRunning) return;
 
-        Long time = System.currentTimeMillis();
         if (!mFrag.isVisible()) {
             getFragmentManager().beginTransaction()
                     .add(R.id.inventory_container, mFrag)
@@ -226,7 +235,6 @@ public class GameActivity extends AppCompatActivity {
                     .remove(mFrag)
                     .commit();
         }
-        Log.e(TAG, "Time: " + String.valueOf(System.currentTimeMillis() - time));
     }
 
     public void getIngredientButtonPress(View view) {
