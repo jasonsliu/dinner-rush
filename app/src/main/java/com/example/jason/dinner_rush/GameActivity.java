@@ -1,6 +1,7 @@
 package com.example.jason.dinner_rush;
 
 import android.app.Fragment;
+import android.media.MediaPlayer;
 import android.net.nsd.NsdServiceInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -53,6 +54,7 @@ public class GameActivity extends AppCompatActivity {
     DataConnection mConnection;
     NsdHelper mNsdHelper;
     SoundHelper mSoundHelper = new SoundHelper();
+    private MediaPlayer mDingPlayer;
 
     private Ingredient mCurrIngredient;
     private Order mCurrOrder;
@@ -77,6 +79,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         mSoundHelper.preparePlayer(this);
+        mDingPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ding);
         LoadViews();
         InitListeners();
     }
@@ -330,13 +333,17 @@ public class GameActivity extends AppCompatActivity {
                             countDown();
                         }
                     });
-                } else if (!mInventory.setForeignIngredient(chatLine)) {
-                    // not an ingredient name, must be score
-                    try {
-                        mScore += Integer.parseInt(chatLine);
-                        scoreDisplay.setText(String.valueOf(mScore));
-                    } catch (NumberFormatException e) {
-                        Log.e(TAG, "Received unknown message: " + chatLine);
+                } else {
+                    if (mInventory.setForeignIngredient(chatLine)) {
+                        mDingPlayer.start();
+                    } else {
+                        // not an ingredient name, must be score
+                        try {
+                            mScore += Integer.parseInt(chatLine);
+                            scoreDisplay.setText(String.valueOf(mScore));
+                        } catch (NumberFormatException e) {
+                            Log.e(TAG, "Received unknown message: " + chatLine);
+                        }
                     }
                 }
             }
