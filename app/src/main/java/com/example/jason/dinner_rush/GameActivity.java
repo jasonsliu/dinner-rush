@@ -179,6 +179,7 @@ public class GameActivity extends AppCompatActivity {
                 mInventory = new P2Inventory(GameActivity.this);
                 mFrag = new P2InventoryFragment();
             }
+
             mCurrOrder = new Order(GameActivity.this, mOrderTextView, mOrderListener);
             scoreDisplay.setText("0");
             gameRunning = true;

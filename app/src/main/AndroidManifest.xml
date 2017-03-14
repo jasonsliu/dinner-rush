@@ -12,6 +12,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- Splash Screen Activity -->
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">

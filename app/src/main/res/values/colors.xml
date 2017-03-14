@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="order">#D7CCC8</color>
+    <color name="green">#00FF00</color>
     <color name="inventory">#C5CAE9</color>
 
     <color name="black_overlay">#66000000</color>
