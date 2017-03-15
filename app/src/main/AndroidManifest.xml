@@ -24,7 +24,10 @@
         <activity
             android:name=".GameActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".AboutActivity"
+        <activity
+            android:name=".AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ScoreActivity"
             android:screenOrientation="portrait" />
     </application>
 

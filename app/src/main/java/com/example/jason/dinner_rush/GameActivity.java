@@ -1,6 +1,7 @@
 package com.example.jason.dinner_rush;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.nsd.NsdServiceInfo;
 import android.os.Bundle;
@@ -150,6 +151,22 @@ public class GameActivity extends AppCompatActivity {
         mSoundHelper.pauseMusic();
         Toast toast = Toast.makeText(getApplicationContext(), "Game over! Score: " + mScore, Toast.LENGTH_LONG);
         toast.show();
+        //  Three seconds countdown
+        CountDownTimer waitCountdown = new CountDownTimer(3000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // Nothing on tick
+            }
+
+            @Override
+            public void onFinish() {
+                Intent i = new Intent(getApplicationContext(), ScoreActivity.class);
+                i.putExtra("score", mScore);
+                startActivity(i);
+                finish();
+            }
+        };
+        waitCountdown.start();
     }
 
     private void putIngredient(Ingredient ing) {
