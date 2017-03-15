@@ -1,22 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_score"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jason.dinner_rush.ScoreActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.jason.dinner_rush.ScoreActivity"
+    android:background="@color/score_activity">
 
-    <TextView android:id="@+id/main_header"
+    <TextView android:id="@+id/game_over_display"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:paddingTop="150dp"
-        android:paddingBottom="150dp"
-        android:text="@string/app_name"
+        android:text="@string/game_over"
         android:textSize="48sp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:textColor="@color/lightGrey"
         android:textStyle="bold"
-        android:fontFamily="sans-serif-smallcaps"/>
+        android:fontFamily="sans-serif-smallcaps"
+        tools:layout_editor_absoluteY="-19dp"
+        tools:layout_editor_absoluteX="26dp" />
+
+    <TextView
+        android:id="@+id/cur_score_label_display"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/your_score_label"
+        android:textColor="@color/lightGrey"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteY="116dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/game_over_display"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/game_over_display"
+        app:layout_constraintHorizontal_bias="0.471" />
+
+    <TextView android:id="@+id/cur_score_display"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:text="000"
+        android:textSize="100sp"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:textColor="@color/lightGrey"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-smallcaps"
+        tools:layout_editor_absoluteY="118dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/cur_score_label_display"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/cur_score_label_display"
+        app:layout_constraintHorizontal_bias="1.0" />
+
+    <TextView
+        android:id="@+id/global_score_label_display"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="229dp"
+        android:layout_height="47dp"
+        android:layout_marginLeft="0dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/global_high_score_label"
+        android:textColor="@color/lightGrey"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/game_over_display"
+        tools:layout_editor_absoluteY="306dp" />
+
+    <TextView
+        android:id="@+id/global_score_display"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="60dp"
+        android:layout_height="47dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="000"
+        android:textColor="@color/lightGrey"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteY="305dp"
+        android:layout_marginRight="9dp"
+        app:layout_constraintRight_toRightOf="@+id/game_over_display" />
+
+    <Button android:id="@+id/play_again_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/main_menu_button"
+        android:onClick="returnToMainMenu"
+        android:textSize="20sp"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:textColor="@color/yellow"
+        android:layout_below="@id/main_header"
+        tools:layout_editor_absoluteY="384dp"
+        tools:layout_editor_absoluteX="42dp" />
 
 </android.support.constraint.ConstraintLayout>

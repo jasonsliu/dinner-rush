@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Dinner Rush</string>
+    <string name="game_over">Game Over</string>
+    <string name="main_menu_button">Return to Main Menu</string>
 
     <string name="play_button">PLAY!</string>
     <string name="about_button">about</string>
     <string name="score_label">Score:</string>
+    <string name="your_score_label">Your Score:</string>
+    <string name="global_high_score_label">Global High Score:</string>
     <string name="timer_label">Time:</string>
     <string name="max_number">99</string>
     <string name="inventory">Inventory</string>
