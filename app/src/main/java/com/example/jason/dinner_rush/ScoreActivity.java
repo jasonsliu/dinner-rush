@@ -17,39 +17,37 @@ import com.android.volley.toolbox.Volley;
 public class ScoreActivity extends AppCompatActivity {
 
     public static final String TAG = "ScoreActivity";
+    public static final String BASE_URL = "http://52.33.78.1:8080/static/";
     TextView mScoreDisplay;
     TextView mGlobalScoreDisplay;
+    int myScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
-        mScoreDisplay = (TextView) findViewById(R.id.cur_score_display);
-        mGlobalScoreDisplay = (TextView) findViewById(R.id.global_score_label_display);
-        int cur_score = getIntent().getIntExtra("score", 0);
-        mScoreDisplay.setText(String.valueOf(cur_score));
-        // Retrieve the global score somehow with server
-        retrieveGlobalScore();
-    }
 
-    public void returnToMainMenu(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        myScore = getIntent().getIntExtra("score", 0);
+
+        mScoreDisplay = (TextView) findViewById(R.id.cur_score_display);
+        mScoreDisplay.setText(String.valueOf(myScore));
+        mGlobalScoreDisplay = (TextView) findViewById(R.id.global_score_label_display);
+
+        retrieveGlobalScore();
     }
 
     public void retrieveGlobalScore() {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://52.33.78.1:8080/static/0";
+        String url = BASE_URL + String.valueOf(myScore);
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 4 characters of the string
-                        Log.d(TAG, "My response: " + response);
-                         mGlobalScoreDisplay.setText("GLOBAL HIGH SCORE: " + response);
+                        Log.d(TAG, "Server response: " + response);
+                        mGlobalScoreDisplay.setText("GLOBAL HIGH SCORE: " + response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -61,6 +59,11 @@ public class ScoreActivity extends AppCompatActivity {
         });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    public void returnToMainMenu(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 }
