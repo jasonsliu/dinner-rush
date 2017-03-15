@@ -33,7 +33,7 @@ import com.example.jason.dinner_rush.utils.SoundHelper;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static final int SECONDS_PER_GAME = 120;
+    public static final int SECONDS_PER_GAME = 10;
     public static final int POINTS_PER_CUT = 1;
     public static final String TAG = "GameActivity";
     public static final String START_MSG = "start";

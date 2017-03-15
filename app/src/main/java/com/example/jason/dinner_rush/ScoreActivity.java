@@ -3,6 +3,7 @@ package com.example.jason.dinner_rush;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -47,11 +48,14 @@ public class ScoreActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 4 characters of the string
-                        mGlobalScoreDisplay.append(response.substring(0,3));
+                        Log.d(TAG, "My response: " + response);
+                         mGlobalScoreDisplay.setText("GLOBAL HIGH SCORE: " + response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "ERROR FOR VOLLEY RESPONSE");
+                Log.d(TAG, error.getMessage());
                 mGlobalScoreDisplay.setText("Global High Score: --");
             }
         });
