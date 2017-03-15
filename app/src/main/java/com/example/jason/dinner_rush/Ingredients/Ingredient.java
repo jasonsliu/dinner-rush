@@ -81,7 +81,6 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
         if (mHealth > 0) {
             this.setImageResource(mRawDrawable);
         } else {
-            mChopMediaPlayer.start(); // Plays the chop sound
             this.setImageResource(mProcessedDrawable); // Switch to chopped ingredient
         }
         if (mHealth <= -1) {
@@ -97,6 +96,7 @@ public class Ingredient extends AppCompatImageView implements ValueAnimator.Anim
         if (mIsActive && event.getAction() == MotionEvent.ACTION_DOWN) {
             process();
             doBounce();
+            mChopMediaPlayer.start(); // Plays the chop sound
         }
         return super.onTouchEvent(event);
     }

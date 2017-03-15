@@ -83,6 +83,7 @@ public class GameActivity extends AppCompatActivity {
         mDingPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ding);
         LoadViews();
         InitListeners();
+        startGame();
     }
 
     private void countDown() {
@@ -151,7 +152,7 @@ public class GameActivity extends AppCompatActivity {
         mSoundHelper.pauseMusic();
         Toast toast = Toast.makeText(getApplicationContext(), "Game over! Score: " + mScore, Toast.LENGTH_LONG);
         toast.show();
-        // Three seconds countdown
+        //  Three seconds countdown
         CountDownTimer waitCountdown = new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -160,26 +161,13 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Intent i = new Intent(GameActivity.this,ScoreActivity.class);
-                Bundle extras = i.getExtras();
-                extras.putInt("score", mScore);
+                Intent i = new Intent(getApplicationContext(), ScoreActivity.class);
+                i.putExtra("score", mScore);
                 startActivity(i);
                 finish();
             }
         };
-        finish();
-    }
-
-    private void closeGame() {
-
-        // start a new intent
-        // put score in bundle
-        // create another screen
-        // in this new activity,
-        // query his server, send the score
-        // GLOBAL HIGH SCORE:
-        // YOUR SCORE: from the bundle
-        // Call finish on old activity
+        waitCountdown.start();
     }
 
     private void putIngredient(Ingredient ing) {
