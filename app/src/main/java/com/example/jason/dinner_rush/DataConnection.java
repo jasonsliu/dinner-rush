@@ -119,6 +119,8 @@ public class DataConnection {
                 mServerSocket.close();
             } catch (IOException ioe) {
                 Log.e(TAG, "Error when closing server socket.");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
@@ -241,6 +243,8 @@ public class DataConnection {
                 getSocket().close();
             } catch (IOException ioe) {
                 Log.e(CLIENT_TAG, "Error when closing server socket.");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
